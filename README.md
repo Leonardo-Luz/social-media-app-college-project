@@ -3,19 +3,19 @@ Leonardo Luz & Diego Prestes
 [Repositório](https://github.com/leonardo-luz/social-media-app-college-project)
 
 ---
-## Sumário
-1. [[#Descrição]]
-2. [[#Objetivos]]
-	1. [[#- Primários|Primários]]
-	2. [[#- Secundários|Secundários]]
-3. [[#Tecnologias]]
-	1. [[#- Frontend |Frontend]]
-	2. [[#- Backend |Backend]]
-4. [[#Modelo Banco de dados]]
-	1. [[#Relacional]]
-	2. [[#Lógico]]
-5. [[#Prototipação]]
-6. [[#Considerações Finais]]
+## Sumário	
+1. [Descrição](#Descrição)
+2. [Objetivos](#Objetivos)
+	1. [Primários](#Primários)
+	2. [Secundários](#Secundários)
+3. [Tecnologias](#Tecnologias)
+	1. [Frontend](#Frontend)
+	2. [Backend](#Backend)
+4. [Model banco de dados](#ModeloBancodedados)
+	1. [Relacional](#Relacional)
+	2. [Lógico](#Lógico)
+5. [Prototipação](#Prototipação)
+6. [Considerações Finais](#ConsideraçõesFinais)
 
 ---
 ### Descrição
