@@ -1,5 +1,5 @@
-Leonardo Luz & Diego Prestes
-4º Semestre ADS
+Leonardo Luz & Diego Prestes <br/>
+4º Semestre ADS <br/>
 [Repositório](https://github.com/leonardo-luz/social-media-app-college-project)
 
 ---
