@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDAO implements DAO<User>{
     private Connection db;
 
-    UserDAO(Connection db){
+    public UserDAO(Connection db){
         this.db = db;
     }
 

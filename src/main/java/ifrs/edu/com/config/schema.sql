@@ -1,87 +1,87 @@
 CREATE DATABASE projeto;
 
-CREATE TABLE User(
-    userId SERIAL NOT NULL,
+CREATE TABLE Users(
+    usersId SERIAL NOT NULL,
     name VARCHAR(100) NOT NULL,
     username VARCHAR(16) NOT NULL UNIQUE,
     password VARCHAR(16) NOT NULL,
     createdAt DATE DEFAULT(NOW()),
     updatedAt DATE DEFAULT(NOW()),
-    CONSTRAINT pk_user PRIMARY KEY (userId)
+    CONSTRAINT pk_users PRIMARY KEY (usersId),
     CONSTRAINT unique_username UNIQUE (username)
 );
 
-CREATE TABLE User_Friend(
-    userId INT NOT NULL, 
+CREATE TABLE Users_Friend(
+    usersId INT NOT NULL, 
     friendId INT NOT NULL, 
-    createdAt DATE DEFALUT(NOW()), 
-    updatedAt DATE DEFALUT(NOW()),
-    CONSTRAINT pk_user_friend PRIMARY KEY (userId, friendId),
-    CONSTRAINT fk_user_friend FOREIGN KEY (userId) REFERENCES user (userId)
+    createdAt DATE DEFAULT(NOW()), 
+    updatedAt DATE DEFAULT(NOW()),
+    CONSTRAINT pk_users_friend PRIMARY KEY (usersId, friendId),
+    CONSTRAINT fk_users_friend FOREIGN KEY (usersId) REFERENCES users (usersId)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT fk_friend_user FOREIGN KEY (friendId) REFERENCES user (userId)
+    CONSTRAINT fk_friend_users FOREIGN KEY (friendId) REFERENCES users (usersId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
-CREATE TABLE User_Block(
-    userId INT NOT NULL, 
+CREATE TABLE Users_Block(
+    usersId INT NOT NULL, 
     blockId INT NOT NULL, 
-    createdAt DATE DEFALUT(NOW()), 
-    updatedAt DATE DEFALUT(NOW()),
-    CONSTRAINT pk_user_block PRIMARY KEY (userId, blockId),
-    CONSTRAINT fk_user_block FOREIGN KEY (userId) REFERENCES user (userId),
+    createdAt DATE DEFAULT(NOW()), 
+    updatedAt DATE DEFAULT(NOW()),
+    CONSTRAINT pk_users_block PRIMARY KEY (usersId, blockId),
+    CONSTRAINT fk_users_block FOREIGN KEY (usersId) REFERENCES users (usersId)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT fk_block_user FOREIGN KEY (blockId) REFERENCES user (userId)
+    CONSTRAINT fk_block_users FOREIGN KEY (blockId) REFERENCES users (usersId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE Chat(
     chatId SERIAL NOT NULL, 
     title VARCHAR(12), 
     adminId INT NOT NULL, 
-    createdAt DATE DEFALUT(NOW()), 
-    updatedAt DATE DEFALUT(NOW()),
+    createdAt DATE DEFAULT(NOW()), 
+    updatedAt DATE DEFAULT(NOW()),
     CONSTRAINT pk_chat PRIMARY KEY (chatId),
-    CONSTRAINT fk_chat_admin FOREIGN KEY (adminId) REFERENCES user (userId)
+    CONSTRAINT fk_chat_admin FOREIGN KEY (adminId) REFERENCES users (usersId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
-CREATE TABLE Chat_User(
+CREATE TABLE Chat_Users(
     chatId INT NOT NULL,
-    userId INT NOT NULL, 
-    createdAt DATE DEFALUT(NOW()), 
-    updatedAt DATE DEFALUT(NOW()),
-    CONSTRAINT pk_chat_user PRIMARY KEY (chatId, userId),
-    CONSTRAINT fk_chat_user FOREIGN KEY (chatId) REFERENCES user (userId),
+    usersId INT NOT NULL, 
+    createdAt DATE DEFAULT(NOW()), 
+    updatedAt DATE DEFAULT(NOW()),
+    CONSTRAINT pk_chat_users PRIMARY KEY (chatId, usersId),
+    CONSTRAINT fk_chat_users FOREIGN KEY (chatId) REFERENCES chat (chatId)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT fk_user_chat FOREIGN KEY (userId) REFERENCES user (chatId)
+    CONSTRAINT fk_users_chat FOREIGN KEY (usersId) REFERENCES users (usersId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE Message(
     messageId SERIAL NOT NULL, 
     text TEXT NOT NULL,
-    userId INT,
+    usersId INT,
     chatId INT,
-    createdAt DATE DEFALUT(NOW()), 
-    updatedAt DATE DEFALUT(NOW()),
+    createdAt DATE DEFAULT(NOW()), 
+    updatedAt DATE DEFAULT(NOW()),
     CONSTRAINT pk_message PRIMARY KEY (messageId),
-    CONSTRAINT fk_message_user FOREIGN KEY (userId) REFERENCES user (userId),
+    CONSTRAINT fk_message_users FOREIGN KEY (usersId) REFERENCES users (usersId)
         ON DELETE SET NULL
         ON UPDATE CASCADE,
     CONSTRAINT fk_message_chat FOREIGN KEY (chatId) REFERENCES chat (chatId)
         ON DELETE SET NULL
-        ON UPDATE CASCADE,
+        ON UPDATE CASCADE
 );
 
-INSERT INTO user (
+INSERT INTO users (
     name, 
     username, 
     password
@@ -97,30 +97,30 @@ VALUES(
     'carlos'
 ),
 (
-    'blocked user',
+    'blocked users',
     'blocked',
-    'user'
+    'users'
 ),
 (
-    'friend user',
+    'friend users',
     'friend',
-    'user'
+    'users'
 );
 
-INSERT INTO User_Block(
-    userid,
+INSERT INTO Users_Block(
+    usersid,
     blockId
 )
-VALUE(
+VALUES(
     1,
     2
 );
 
-INSERT INTO User_Friend(
-    userid,
+INSERT INTO Users_Friend(
+    usersid,
     friendId
 )
-VALUE(
+VALUES(
     1,
     3
 );
@@ -130,14 +130,14 @@ INSERT INTO chat(
     title, 
     adminid
 )
-VALUE(
+VALUES(
     'global', 
-    '0'
+    0
 );
 
-INSERT INTO Chat_User(
+INSERT INTO Chat_Users(
     chatid,
-    userId
+    usersId
 )
 VALUES(
     0,
@@ -146,16 +146,15 @@ VALUES(
 (
     0,
     1
-)
+);
 
 INSERT INTO message(
     text, 
-    userid, 
+    usersid, 
     chatid
 ) 
-VALUE(
+VALUES(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec mauris non orci porttitor laoreet. Vestibulum feugiat purus eu nunc malesuada dignissim.', 
     0, 
     0
 );
-

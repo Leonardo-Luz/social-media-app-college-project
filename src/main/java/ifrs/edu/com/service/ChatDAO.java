@@ -12,7 +12,7 @@ import java.util.List;
 public class ChatDAO implements DAO<Chat>{
     private Connection db;
 
-    ChatDAO(Connection db){
+    public ChatDAO(Connection db){
         this.db = db;
     }
 

@@ -12,13 +12,13 @@ import java.util.List;
 public class MessageDAO implements DAO<Message>{
     private Connection db;
 
-    MessageDAO(Connection db){
+    public MessageDAO(Connection db){
         this.db = db;
     }
 
     @Override
     public boolean insert(Message model) throws SQLException{
-        String query = "INSERT INTO message (text, userid, chatid) VALUES (?, ?, ?)";
+        String query = "INSERT INTO message (text, usersid, chatid) VALUES (?, ?, ?)";
         PreparedStatement ps = this.db.prepareStatement(query);
         
         ps.setString(1, model.getText());
@@ -42,8 +42,8 @@ public class MessageDAO implements DAO<Message>{
     public boolean update(Message model) throws SQLException{
         String query = 
             """
-                UPDATE chat SET text=?, userid=?, chatid=?
-                WHERE chatid = ?
+                UPDATE message SET text=?, usersid=?, chatid=?
+                WHERE messageid = ?
             """;
         PreparedStatement ps = this.db.prepareStatement(query);
         
@@ -62,7 +62,7 @@ public class MessageDAO implements DAO<Message>{
 
         String query = 
             """
-                SELECT messageid, text, userid, chatid, createdat, updatedat FROM chat 
+                SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message 
                 LIMIT ? OFFSET ?
             """;
         PreparedStatement ps = this.db.prepareStatement(query);
@@ -76,7 +76,7 @@ public class MessageDAO implements DAO<Message>{
             list.add(new Message(
                 response.getInt("messageid"),
                 response.getString("text"),
-                response.getInt("userid"),
+                response.getInt("usersid"),
                 response.getInt("chatid"),
                 response.getDate("createdat"),
                 response.getDate("updatedat")
@@ -90,8 +90,8 @@ public class MessageDAO implements DAO<Message>{
     public Message get(int id) throws SQLException{
         String query = 
             """
-                SELECT messageid, text, userid, chatid, createdat, updatedat FROM chat 
-                WHERE id=?
+                SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
+                WHERE messageid=?
                 LIMIT 1
             """;
         PreparedStatement ps = this.db.prepareStatement(query);
@@ -104,7 +104,7 @@ public class MessageDAO implements DAO<Message>{
             return new Message(
                 response.getInt("messageid"),
                 response.getString("text"),
-                response.getInt("userid"),
+                response.getInt("usersid"),
                 response.getInt("chatid"),
                 response.getDate("createdat"),
                 response.getDate("updatedat")
