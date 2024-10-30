@@ -1,6 +1,7 @@
 package ifrs.edu.com.models;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
 
-    User(){}
-    User(int userId, String name, String username, String password, int[] friendsId, UserDAO service, Date createdAt, Date updatedAt){
+    public User(){}
+    public User(int userId, String name, String username, String password, int[] friendsId, UserDAO service, Date createdAt, Date updatedAt){
         friends = new ArrayList<>();
 
         this.setUserId(userId);
@@ -28,6 +29,15 @@ public class User {
         for (int friendId: friendsId) {
             addFriend(friendId, service);
         }
+
+        this.setUpdatedAt(createdAt);
+        this.setCreatedAt(updatedAt);
+    }
+    public User(int userId, String name, String username, String password, Date createdAt, Date updatedAt){
+        this.setUserId(userId);
+        this.setPassword(password);
+        this.setName(name);
+        this.setUsername(username);
 
         this.setUpdatedAt(createdAt);
         this.setCreatedAt(updatedAt);
@@ -78,7 +88,12 @@ public class User {
         this.friends = friends;
     }
     public void addFriend(int friendId, UserDAO service){
-        friends.add(service.get(friendId));
+        try{
+            friends.add(service.get(friendId));
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
     }
 
     public Date getCreatedAt() {

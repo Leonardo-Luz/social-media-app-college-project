@@ -11,8 +11,16 @@ public class Chat {
     private Date createdAt;
     private Date updatedAt;
 
-    Chat(){}
-    Chat(int chatId, String title, List<User> users, User admin, Date createdAt, Date updatedAt){
+    public Chat(){}
+    public Chat(int chatId, String title, Date createdAt, Date updatedAt){
+        this.setChatId(chatId);
+        this.setTitle(title);
+
+        this.setUpdatedAt(createdAt);
+        this.setCreatedAt(updatedAt);
+    }
+
+    public Chat(int chatId, String title, List<User> users, User admin, Date createdAt, Date updatedAt){
         this.setChatId(chatId);
         this.setTitle(title);
 

@@ -10,8 +10,8 @@ public class Message {
     private Date createdAt;
     private Date updatedAt;
 
-    Message(){}
-    Message(int messageId, String text, int userId, int chatId, Date createdAt, Date updatedAt){
+    public Message(){}
+    public Message(int messageId, String text, int userId, int chatId, Date createdAt, Date updatedAt){
         this.setMessageId(messageId);
         this.setText(text);
 
