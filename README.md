@@ -103,4 +103,4 @@ Message(messageId, text, userId, chatId, createdAt, updatedAt)
 ---
 
 ### Considerações Finais
-> Dado a extensão do projeto, provavelmente não será possivel implementar todas as funcionabilidades secundárias previstas até o prazo final, entretanto continuarei atualizando-o no [repositório](https://github.com/leonardo-luz/social-media-app-college-project) do git.
+> Dado a extensão do projeto, provavelmente não será possivel implementar todas as funcionabilidades secundárias previstas até o prazo final.
