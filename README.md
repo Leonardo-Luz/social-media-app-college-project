@@ -292,7 +292,7 @@ Message(messageId, text, userId, chatId, createdAt, updatedAt)
 ---
 ### Prototipação [WIP]
 
-![main_prototipe](./prototipation/main.png)
+![main_prototipe](./prototipation/prototipation.png.png)
 
 ---
 
