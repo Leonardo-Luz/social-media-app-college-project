@@ -132,7 +132,7 @@ INSERT INTO chat(
 )
 VALUES(
     'global', 
-    0
+    1
 );
 
 INSERT INTO Chat_Users(
@@ -140,12 +140,12 @@ INSERT INTO Chat_Users(
     usersId
 )
 VALUES(
-    0,
-    0
+    1,
+    1
 ),
 (
-    0,
-    1
+    1,
+    2
 );
 
 INSERT INTO message(
@@ -155,6 +155,6 @@ INSERT INTO message(
 ) 
 VALUES(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec mauris non orci porttitor laoreet. Vestibulum feugiat purus eu nunc malesuada dignissim.', 
-    0, 
-    0
+    1, 
+    1
 );

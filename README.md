@@ -5,21 +5,34 @@ Leonardo Luz & Diego Prestes <br/>
 ---
 ## Sumário	
 1. [Descrição](#Descrição)
-2. [Objetivos](#Objetivos)
+2. [Configuração](#Configuração)
+3. [Objetivos](#Objetivos)
 	1. [Primários](#Primários)
 	2. [Secundários](#Secundários)
-3. [Tecnologias](#Tecnologias)
+4. [Tecnologias](#Tecnologias)
 	1. [Frontend](#Frontend)
 	2. [Backend](#Backend)
-4. [Model banco de dados](#ModeloBancodedados)
+5. [Model banco de dados](#ModeloBancodedados)
 	1. [Relacional](#Relacional)
 	2. [Lógico](#Lógico)
-5. [Prototipação](#Prototipação)
-6. [Considerações Finais](#ConsideraçõesFinais)
+6. [Prototipação](#Prototipação)
+7. [Considerações Finais](#ConsideraçõesFinais)
 
 ---
 ### Descrição
 >Este projeto terá como objetivo principal desenvolver uma Rede social focada em interação em tempo real entre usuários apartir de um chat global, existindo também a opção de conversar em particular com amigos adicionados.
+
+---
+### Configuração
+
+```
+git clone https://github.com/leonardo-luz/social-media-app-college-project
+cd your_path/social-media-app-college-project
+
+mvn clean install
+
+mvn javafx:run
+```
 
 ---
 ### Objetivos
@@ -48,9 +61,11 @@ Leonardo Luz & Diego Prestes <br/>
 
 #### - Frontend:
 - JavaFx 21
-	- Para a implementação de interface gráfica.
+	- Utilizado para a implementação de interface gráfica.
 
 #### - Backend:
+- WebSocket
+	- Utilizado para a implementação do chat em tempo real.
 
 ---
 ### Modelo Banco de Dados
