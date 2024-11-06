@@ -6,20 +6,20 @@ Leonardo Luz & Diego Prestes <br/>
 ## Sumário	
 1. [Descrição](#Descrição)
 2. [Configuração](#Configuração)
-	1. [Banco de dados](#Bancodedados)
+	1. [Banco de dados](#Banco-de-dados)
 	2. [Aplicação](#Aplicação)
-	3. [Variáveis de ambiente](#Variáveisdeambiente)
+	3. [Variáveis de ambiente](#Variáveis-de-ambiente)
 3. [Objetivos](#Objetivos)
 	1. [Primários](#Primários)
 	2. [Secundários](#Secundários)
 4. [Tecnologias](#Tecnologias)
 	1. [Frontend](#Frontend)
 	2. [Backend](#Backend)
-5. [Model banco de dados](#ModeloBancodedados)
+5. [Model banco de dados](#Modelo-Banco-de-dados)
 	1. [Relacional](#Relacional)
 	2. [Lógico](#Lógico)
 6. [Prototipação](#Prototipação)
-7. [Considerações Finais](#ConsideraçõesFinais)
+7. [Considerações Finais](#Considerações-Finais)
 
 ---
 ### Descrição
