@@ -3,7 +3,6 @@ package ifrs.edu.com;
 import ifrs.edu.com.config.Database;
 import ifrs.edu.com.models.Message;
 import ifrs.edu.com.service.MessageDAO;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -6,6 +6,9 @@ Leonardo Luz & Diego Prestes <br/>
 ## Sumário	
 1. [Descrição](#Descrição)
 2. [Configuração](#Configuração)
+	1. [Banco de dados](#Bancodedados)
+	2. [Aplicação](#Aplicação)
+	3. [Variáveis de ambiente](#Variáveisdeambiente)
 3. [Objetivos](#Objetivos)
 	1. [Primários](#Primários)
 	2. [Secundários](#Secundários)
@@ -25,7 +28,7 @@ Leonardo Luz & Diego Prestes <br/>
 ---
 ### Configuração
 
-- Postgres - Banco de dados
+##### Banco de dados
 
 ```
 CREATE DATABASE projeto;
@@ -203,7 +206,7 @@ VALUES(
 );
 ```
 
-- Aplicação
+##### Aplicação
 ```
 git clone https://github.com/leonardo-luz/social-media-app-college-project
 cd your_path/social-media-app-college-project
@@ -213,7 +216,7 @@ mvn clean install
 mvn javafx:run
 ```
 
-- Variáveis de ambiente
+##### Variáveis de ambiente
 ```
 cd your_path/social-media-app-college-project
 touch .env
