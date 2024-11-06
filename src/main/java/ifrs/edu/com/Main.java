@@ -1,11 +1,13 @@
 package ifrs.edu.com;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import ifrs.edu.com.config.Database;
 import ifrs.edu.com.models.Message;
 import ifrs.edu.com.service.MessageDAO;
+import io.github.cdimascio.dotenv.Dotenv;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -17,15 +19,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         Message test = null;
-        
-        try{
+
+        try {
             Connection db = Database.connect();
-    
+
             MessageDAO service = new MessageDAO(db);
 
             test = service.get(1);
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 

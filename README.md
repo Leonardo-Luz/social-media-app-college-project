@@ -213,6 +213,18 @@ mvn clean install
 mvn javafx:run
 ```
 
+- Variáveis de ambiente
+```
+cd your_path/social-media-app-college-project
+touch .env
+```
+
+```
+POSTGRES_URL = jdbc:postgresql://YOUR_PG_HOST:YOUR_PG_PORT/YOUR_PG_DATABASE
+POSTGRES_USER = YOUR_PG_USERNAME
+POSTGRES_PASSWORD = YOUR_PG_PASSWORD
+```
+
 ---
 ### Objetivos
 
