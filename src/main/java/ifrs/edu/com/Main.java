@@ -1,41 +1,30 @@
 package ifrs.edu.com;
 
-import ifrs.edu.com.config.Database;
-import ifrs.edu.com.models.Message;
-import ifrs.edu.com.service.MessageDAO;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Message test = null;
-
         try {
-            Connection db = Database.connect();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
+            BorderPane root = loader.load();
 
-            MessageDAO service = new MessageDAO(db);
-
-            test = service.get(1);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Scene scene = new Scene(root, 640, 480);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException err) {
+            System.out.println(err);
         }
-
-        Label l = new Label(test != null ? test.getText() : "Error");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
