@@ -1,5 +1,6 @@
 package ifrs.edu.com.service;
 
+import ifrs.edu.com.config.Database;
 import ifrs.edu.com.models.User;
 
 import java.sql.Connection;
@@ -12,8 +13,8 @@ import java.util.List;
 public class UserDAO implements DAO<User> {
     private Connection db;
 
-    public UserDAO(Connection db) {
-        this.db = db;
+    public UserDAO() throws SQLException {
+        this.db = Database.connect();
     }
 
     @Override

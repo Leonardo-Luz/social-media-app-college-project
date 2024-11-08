@@ -1,4 +1,6 @@
 package ifrs.edu.com.service;
+
+import ifrs.edu.com.config.Database;
 import ifrs.edu.com.models.Message;
 
 import java.sql.Connection;
@@ -8,19 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MessageDAO implements DAO<Message>{
+public class MessageDAO implements DAO<Message> {
     private Connection db;
 
-    public MessageDAO(Connection db){
-        this.db = db;
+    public MessageDAO() throws SQLException {
+        this.db = Database.connect();
     }
 
     @Override
-    public boolean insert(Message model) throws SQLException{
+    public boolean insert(Message model) throws SQLException {
         String query = "INSERT INTO message (text, usersid, chatid) VALUES (?, ?, ?)";
         PreparedStatement ps = this.db.prepareStatement(query);
-        
+
         ps.setString(1, model.getText());
         ps.setInt(2, model.getUser().getUserId());
         ps.setInt(3, model.getChat().getChatId());
@@ -29,24 +30,23 @@ public class MessageDAO implements DAO<Message>{
     }
 
     @Override
-    public boolean delete(int id) throws SQLException{
+    public boolean delete(int id) throws SQLException {
         String query = "DELETE FROM chat WHERE chatid = ?";
         PreparedStatement ps = this.db.prepareStatement(query);
-        
+
         ps.setInt(1, id);
 
         return ps.execute();
     }
 
     @Override
-    public boolean update(Message model) throws SQLException{
-        String query = 
-            """
-                UPDATE message SET text=?, usersid=?, chatid=?
-                WHERE messageid = ?
-            """;
+    public boolean update(Message model) throws SQLException {
+        String query = """
+                    UPDATE message SET text=?, usersid=?, chatid=?
+                    WHERE messageid = ?
+                """;
         PreparedStatement ps = this.db.prepareStatement(query);
-        
+
         ps.setString(1, model.getText());
         ps.setInt(2, model.getUser().getUserId());
         ps.setInt(3, model.getChat().getChatId());
@@ -57,14 +57,13 @@ public class MessageDAO implements DAO<Message>{
     }
 
     @Override
-    public List<Message> list(int limit, int offset) throws SQLException{
+    public List<Message> list(int limit, int offset) throws SQLException {
         List<Message> list = new ArrayList<>();
 
-        String query = 
-            """
-                SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message 
-                LIMIT ? OFFSET ?
-            """;
+        String query = """
+                    SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
+                    LIMIT ? OFFSET ?
+                """;
         PreparedStatement ps = this.db.prepareStatement(query);
 
         ps.setInt(1, limit);
@@ -72,46 +71,43 @@ public class MessageDAO implements DAO<Message>{
 
         ResultSet response = ps.executeQuery();
 
-        while(response.next()) {
+        while (response.next()) {
             list.add(new Message(
-                response.getInt("messageid"),
-                response.getString("text"),
-                response.getInt("usersid"),
-                response.getInt("chatid"),
-                response.getDate("createdat"),
-                response.getDate("updatedat")
-            ));
+                    response.getInt("messageid"),
+                    response.getString("text"),
+                    response.getInt("usersid"),
+                    response.getInt("chatid"),
+                    response.getDate("createdat"),
+                    response.getDate("updatedat")));
         }
 
         return list;
     }
 
     @Override
-    public Message get(int id) throws SQLException{
-        String query = 
-            """
-                SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
-                WHERE messageid=?
-                LIMIT 1
-            """;
+    public Message get(int id) throws SQLException {
+        String query = """
+                    SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
+                    WHERE messageid=?
+                    LIMIT 1
+                """;
         PreparedStatement ps = this.db.prepareStatement(query);
 
         ps.setInt(1, id);
 
         ResultSet response = ps.executeQuery();
 
-        if(response.next()) {
+        if (response.next()) {
             return new Message(
-                response.getInt("messageid"),
-                response.getString("text"),
-                response.getInt("usersid"),
-                response.getInt("chatid"),
-                response.getDate("createdat"),
-                response.getDate("updatedat")
-            );
+                    response.getInt("messageid"),
+                    response.getString("text"),
+                    response.getInt("usersid"),
+                    response.getInt("chatid"),
+                    response.getDate("createdat"),
+                    response.getDate("updatedat"));
         }
 
         return null;
     }
-    
+
 }
