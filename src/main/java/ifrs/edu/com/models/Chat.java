@@ -88,9 +88,9 @@ public class Chat {
 
     @Override
     public String toString() {
-        return "Chat" + this.chatId +
-                "Title: " + this.title +
-                "admin: " + this.admin.getUsername();
+        return "\nChat" + this.chatId +
+                "\nTitle: " + this.title +
+                "\nadmin: " + this.admin.getUsername();
     }
 
     @Override

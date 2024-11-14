@@ -6,7 +6,7 @@ import ifrs.edu.com.service.UserDAO;
 public class UserDAOTest {
 	private static UserDAO service = new UserDAO();
 
-	public boolean run() {
+	public static boolean run() {
 		User result = new User("Jose", "roberto", "carlos");
 
 		User response = service.get(3);

@@ -8,7 +8,7 @@ public class ChatDAOTest {
 	private static ChatDAO chatService = new ChatDAO();
 	private static UserDAO userService = new UserDAO();
 
-	public boolean run() {
+	public static boolean run() {
 		Chat result = new Chat("Test", userService.get(1));
 
 		Chat response = chatService.get(2);

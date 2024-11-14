@@ -4,6 +4,7 @@ package ifrs.edu.com.controllers;
 import java.io.IOException;
 
 import ifrs.edu.com.service.MessageDAO;
+import ifrs.edu.com.tests.models.MessageModelTest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
