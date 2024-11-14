@@ -13,135 +13,175 @@ import java.util.List;
 public class UserDAO implements DAO<User> {
     private Connection db;
 
-    public UserDAO() throws SQLException {
-        this.db = Database.connect();
+    public UserDAO() {
+        try {
+            this.db = Database.connect();
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
     }
 
     @Override
-    public boolean insert(User model) throws SQLException {
-        String query = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
-        PreparedStatement ps = this.db.prepareStatement(query);
+    public boolean insert(User model) {
+        try {
+            String query = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
+            PreparedStatement ps = this.db.prepareStatement(query);
 
-        ps.setString(1, model.getName());
-        ps.setString(2, model.getUsername());
-        ps.setString(3, model.getPassword());
+            ps.setString(1, model.getName());
+            ps.setString(2, model.getUsername());
+            ps.setString(3, model.getPassword());
 
-        // insert into USER_FRIENDS table
+            // insert into USER_FRIENDS table
 
-        return ps.execute();
-    }
-
-    @Override
-    public boolean delete(int id) throws SQLException {
-        String query = "DELETE FROM user WHERE userid = ?";
-        PreparedStatement ps = this.db.prepareStatement(query);
-
-        ps.setInt(1, id);
-
-        return ps.execute();
-    }
-
-    @Override
-    public boolean update(User model) throws SQLException {
-        String query = """
-                    UPDATE user SET name=?, username=?, password=?
-                    WHERE userid = ?
-                """;
-        PreparedStatement ps = this.db.prepareStatement(query);
-
-        ps.setString(1, model.getName());
-        ps.setString(2, model.getUsername());
-        ps.setString(3, model.getPassword());
-
-        ps.setInt(4, model.getUserId());
-
-        // update USER_FRIENDS table
-
-        return ps.executeUpdate() > 0;
-    }
-
-    @Override
-    public List<User> list(int limit, int offset) throws SQLException {
-        List<User> list = new ArrayList<>();
-
-        String query = """
-                    SELECT userid, name, username, password, createdat, updatedat FROM user
-                    LIMIT ? OFFSET ?
-                """;
-        PreparedStatement ps = this.db.prepareStatement(query);
-
-        ps.setInt(1, limit);
-        ps.setInt(2, offset);
-
-        ResultSet response = ps.executeQuery();
-
-        while (response.next()) {
-            list.add(new User(
-                    response.getInt("userid"),
-                    response.getString("name"),
-                    response.getString("username"),
-                    response.getString("password"),
-                    response.getDate("createdat"),
-                    response.getDate("updatedat")));
+            return ps.execute();
+        } catch (SQLException err) {
+            System.out.println(err);
         }
 
-        // Get from CHAT_USERS table
-
-        return list;
+        return false;
     }
 
     @Override
-    public User get(int id) throws SQLException {
-        String query = """
-                    SELECT userid, name, username, password, createdat, updatedat FROM user
-                    WHERE id=?
-                    LIMIT 1
-                """;
-        PreparedStatement ps = this.db.prepareStatement(query);
+    public boolean delete(int id) {
+        try {
+            String query = "DELETE FROM user WHERE userid = ?";
+            PreparedStatement ps = this.db.prepareStatement(query);
 
-        ps.setInt(1, id);
+            ps.setInt(1, id);
 
-        ResultSet response = ps.executeQuery();
-
-        if (response.next()) {
-            return new User(
-                    response.getInt("userid"),
-                    response.getString("name"),
-                    response.getString("username"),
-                    response.getString("password"),
-                    response.getDate("createdat"),
-                    response.getDate("updatedat"));
+            return ps.execute();
+        } catch (SQLException err) {
+            System.out.println(err);
         }
 
-        // Get from CHAT_USERS table
+        return false;
+    }
+
+    @Override
+    public boolean update(User model) {
+        try {
+            String query = """
+                        UPDATE user SET name=?, username=?, password=?
+                        WHERE userid = ?
+                    """;
+            PreparedStatement ps = this.db.prepareStatement(query);
+
+            ps.setString(1, model.getName());
+            ps.setString(2, model.getUsername());
+            ps.setString(3, model.getPassword());
+
+            ps.setInt(4, model.getUserId());
+
+            // update USER_FRIENDS table
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<User> list(int limit, int offset) {
+        try {
+            List<User> list = new ArrayList<>();
+
+            String query = """
+                        SELECT userid, name, username, password, createdat, updatedat FROM user
+                        LIMIT ? OFFSET ?
+                    """;
+            PreparedStatement ps = this.db.prepareStatement(query);
+
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+
+            ResultSet response = ps.executeQuery();
+
+            while (response.next()) {
+                list.add(new User(
+                        response.getInt("userid"),
+                        response.getString("name"),
+                        response.getString("username"),
+                        response.getString("password"),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat")));
+            }
+
+            // Get from CHAT_USERS table
+
+            return list;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
 
         return null;
     }
 
-    public User login(String username, String password) throws SQLException {
-        String query = """
-                    SELECT userid, name, username, password, createdat, updatedat FROM user
-                    WHERE username=? AND password=?
-                    LIMIT 1
-                """;
-        PreparedStatement ps = this.db.prepareStatement(query);
+    @Override
+    public User get(int id) {
+        try {
+            String query = """
+                        SELECT userid, name, username, password, createdat, updatedat FROM user
+                        WHERE id=?
+                        LIMIT 1
+                    """;
+            PreparedStatement ps = this.db.prepareStatement(query);
 
-        ps.setString(1, username);
-        ps.setString(2, password);
+            ps.setInt(1, id);
 
-        ResultSet response = ps.executeQuery();
+            ResultSet response = ps.executeQuery();
 
-        if (response.next()) {
-            return new User(
-                    response.getInt("userid"),
-                    response.getString("name"),
-                    response.getString("username"),
-                    response.getString("password"),
-                    response.getDate("createdat"),
-                    response.getDate("updatedat"));
+            if (response.next()) {
+                return new User(
+                        response.getInt("userid"),
+                        response.getString("name"),
+                        response.getString("username"),
+                        response.getString("password"),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat"));
+            }
+
+            // Get from CHAT_USERS table
+
+            return null;
+        } catch (SQLException err) {
+            System.out.println(err);
         }
 
-        // Get from CHAT_USERS table
+        return null;
+    }
+
+    public User login(String username, String password) {
+        try {
+            String query = """
+                        SELECT userid, name, username, password, createdat, updatedat FROM user
+                        WHERE username=? AND password=?
+                        LIMIT 1
+                    """;
+            PreparedStatement ps = this.db.prepareStatement(query);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet response = ps.executeQuery();
+
+            if (response.next()) {
+                return new User(
+                        response.getInt("userid"),
+                        response.getString("name"),
+                        response.getString("username"),
+                        response.getString("password"),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat"));
+            }
+
+            // Get from CHAT_USERS table
+
+            return null;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
 
         return null;
     }

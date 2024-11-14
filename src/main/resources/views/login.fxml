@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fxml>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="ifrs.edu.com.controllers.MainController"
+    stylesheets="@../styles/main.css"
+>
+    <top>
+        <HBox styleClass="nav-container">
+            <Button fx:id="hamburguerMenu" text="MENU"
+                layoutX="400"
+                layoutY="250"
+            />
+            <Button fx:id="button" text="Registrar" layoutX="350.0" layoutY="250.0" />
+            <Button fx:id="navLogin" text="Login"
+                layoutX="400"
+                layoutY="250"
+            />
+        </HBox>
+    </top>
+
+    <center>
+        <Label text="LOGIN" />
+    </center>
+</BorderPane>

@@ -21,6 +21,7 @@
             <Button fx:id="navLogin" text="Login"
                 layoutX="400"
                 layoutY="250"
+                onAction="#changeSceneHandler"
             />
         </HBox>
     </top>

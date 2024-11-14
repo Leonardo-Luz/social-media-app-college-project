@@ -297,12 +297,12 @@ Message(messageId, text, userId, chatId, createdAt, updatedAt)
 	chatId Referencia Chat
 ```
 
-#### Relacional
+#### Conceitual
 
-![er_model](./prototipation/ER.png)
+![er_model](./prototipation/conceitual.png)
 
 #### Lógico
-![logic_model](./prototipation/Lógico.png)
+![logic_model](./prototipation/logico.png)
 
 ---
 ### Prototipação [WIP]

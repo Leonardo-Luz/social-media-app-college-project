@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 
-class AuthProvider {
+public class AuthProvider {
     private User user = null;
 
     public void login(UserDAO service, String username, String password) {
