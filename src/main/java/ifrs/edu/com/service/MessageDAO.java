@@ -1,7 +1,9 @@
 package ifrs.edu.com.service;
 
 import ifrs.edu.com.config.Database;
+import ifrs.edu.com.models.Chat;
 import ifrs.edu.com.models.Message;
+import ifrs.edu.com.models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,6 +84,9 @@ public class MessageDAO implements DAO<Message> {
     @Override
     public List<Message> list(int limit, int offset) {
         try {
+            UserDAO userService = new UserDAO();
+            ChatDAO chatService = new ChatDAO();
+
             List<Message> list = new ArrayList<>();
 
             String query = """
@@ -99,8 +104,8 @@ public class MessageDAO implements DAO<Message> {
                 list.add(new Message(
                         response.getInt("messageid"),
                         response.getString("text"),
-                        response.getInt("usersid"),
-                        response.getInt("chatid"),
+                        userService.get(response.getInt("usersid")),
+                        chatService.get(response.getInt("chatid")),
                         response.getDate("createdat"),
                         response.getDate("updatedat")));
             }
@@ -116,6 +121,9 @@ public class MessageDAO implements DAO<Message> {
     @Override
     public Message get(int id) {
         try {
+            UserDAO userService = new UserDAO();
+            ChatDAO chatService = new ChatDAO();
+
             String query = """
                         SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
                         WHERE messageid=?
@@ -128,11 +136,14 @@ public class MessageDAO implements DAO<Message> {
             ResultSet response = ps.executeQuery();
 
             if (response.next()) {
+                User user = userService.get(response.getInt("usersid"));
+                Chat chat = chatService.get(response.getInt("chatid"));
+
                 return new Message(
                         response.getInt("messageid"),
                         response.getString("text"),
-                        response.getInt("usersid"),
-                        response.getInt("chatid"),
+                        user,
+                        chat,
                         response.getDate("createdat"),
                         response.getDate("updatedat"));
             }

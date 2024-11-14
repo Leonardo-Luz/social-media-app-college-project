@@ -24,7 +24,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public boolean insert(User model) {
         try {
-            String query = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
+            String query = "INSERT INTO users (name, username, password) VALUES (?, ?, ?)";
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setString(1, model.getName());
@@ -44,7 +44,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public boolean delete(int id) {
         try {
-            String query = "DELETE FROM user WHERE userid = ?";
+            String query = "DELETE FROM users WHERE usersid = ?";
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setInt(1, id);
@@ -61,8 +61,8 @@ public class UserDAO implements DAO<User> {
     public boolean update(User model) {
         try {
             String query = """
-                        UPDATE user SET name=?, username=?, password=?
-                        WHERE userid = ?
+                        UPDATE users SET name=?, username=?, password=?
+                        WHERE usersid = ?
                     """;
             PreparedStatement ps = this.db.prepareStatement(query);
 
@@ -88,7 +88,7 @@ public class UserDAO implements DAO<User> {
             List<User> list = new ArrayList<>();
 
             String query = """
-                        SELECT userid, name, username, password, createdat, updatedat FROM user
+                        SELECT usersid, name, username, password, createdat, updatedat FROM users
                         LIMIT ? OFFSET ?
                     """;
             PreparedStatement ps = this.db.prepareStatement(query);
@@ -100,7 +100,7 @@ public class UserDAO implements DAO<User> {
 
             while (response.next()) {
                 list.add(new User(
-                        response.getInt("userid"),
+                        response.getInt("usersid"),
                         response.getString("name"),
                         response.getString("username"),
                         response.getString("password"),
@@ -122,8 +122,8 @@ public class UserDAO implements DAO<User> {
     public User get(int id) {
         try {
             String query = """
-                        SELECT userid, name, username, password, createdat, updatedat FROM user
-                        WHERE id=?
+                        SELECT usersid, name, username, password, createdat, updatedat FROM users
+                        WHERE usersid=?
                         LIMIT 1
                     """;
             PreparedStatement ps = this.db.prepareStatement(query);
@@ -134,7 +134,7 @@ public class UserDAO implements DAO<User> {
 
             if (response.next()) {
                 return new User(
-                        response.getInt("userid"),
+                        response.getInt("usersid"),
                         response.getString("name"),
                         response.getString("username"),
                         response.getString("password"),
@@ -155,7 +155,7 @@ public class UserDAO implements DAO<User> {
     public User login(String username, String password) {
         try {
             String query = """
-                        SELECT userid, name, username, password, createdat, updatedat FROM user
+                        SELECT usersid, name, username, password, createdat, updatedat FROM users
                         WHERE username=? AND password=?
                         LIMIT 1
                     """;
@@ -168,7 +168,7 @@ public class UserDAO implements DAO<User> {
 
             if (response.next()) {
                 return new User(
-                        response.getInt("userid"),
+                        response.getInt("usersid"),
                         response.getString("name"),
                         response.getString("username"),
                         response.getString("password"),

@@ -1,7 +1,6 @@
 package ifrs.edu.com.models;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class User {
         return password;
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -104,11 +103,7 @@ public class User {
     }
 
     public void addFriend(int friendId, UserDAO service) {
-        try {
-            friends.add(service.get(friendId));
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        friends.add(service.get(friendId));
     }
 
     public Date getCreatedAt() {
@@ -128,17 +123,17 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof User &&
-                ((User) obj).getUserId() == this.getUserId() &&
-                ((User) obj).getUsername().equals(this.getUsername());
-    }
-
-    @Override
     public String toString() {
         return "\nUser " + this.userId +
                 "\nName: " + this.name +
                 "\nUsername: " + this.username +
                 "\nPassword: " + this.password;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof User &&
+                ((User) obj).getUserId() == this.getUserId() &&
+                ((User) obj).getUsername().equals(this.getUsername());
     }
 }

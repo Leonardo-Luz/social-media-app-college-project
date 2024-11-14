@@ -36,7 +36,7 @@ public class MainController {
         button.setOnAction(event -> {
             MessageDAO service = new MessageDAO();
 
-            System.out.println(service.get(1).getText());
+            System.out.println(service.get(1));
         });
 
     }
