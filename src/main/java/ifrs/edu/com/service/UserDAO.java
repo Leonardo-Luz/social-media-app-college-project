@@ -24,12 +24,23 @@ public class UserDAO implements DAO<User> {
     @Override
     public boolean insert(User model) {
         try {
-            String query = "INSERT INTO users (name, username, password) VALUES (?, ?, ?)";
+            // FIX: Search a better way to do it!
+
+            String query;
+
+            if (model.getUserId() != 0)
+                query = "INSERT INTO users (name, username, password, usersid) VALUES (?, ?, ?, ?)";
+            else
+                query = "INSERT INTO users (name, username, password) VALUES (?, ?, ?)";
+
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setString(1, model.getName());
             ps.setString(2, model.getUsername());
             ps.setString(3, model.getPassword());
+
+            if (model.getUserId() != 0)
+                ps.setInt(4, model.getUserId());
 
             // insert into USER_FRIENDS table
 

@@ -8,7 +8,7 @@ public class UserModelTest {
 		User user = new User("Robert", "Carlos", "1234");
 
 		String toString = "\nUser 0" +
-				"\nName: Roberto" +
+				"\nName: Robert" +
 				"\nUsername: Carlos" +
 				"\nPassword: 1234";
 

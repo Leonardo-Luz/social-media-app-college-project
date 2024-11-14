@@ -26,12 +26,20 @@ public class MessageDAO implements DAO<Message> {
     @Override
     public boolean insert(Message model) {
         try {
-            String query = "INSERT INTO message (text, usersid, chatid) VALUES (?, ?, ?)";
+            String query;
+
+            if (model.getMessageId() != 0)
+                query = "INSERT INTO message (text, usersid, chatid, messageid) VALUES (?, ?, ?, ?)";
+            else
+                query = "INSERT INTO message (text, usersid, chatid) VALUES (?, ?, ?)";
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setString(1, model.getText());
             ps.setInt(2, model.getUser().getUserId());
             ps.setInt(3, model.getChat().getChatId());
+
+            if (model.getMessageId() != 0)
+                ps.setInt(4, model.getMessageId());
 
             return ps.execute();
 
@@ -45,7 +53,7 @@ public class MessageDAO implements DAO<Message> {
     @Override
     public boolean delete(int id) {
         try {
-            String query = "DELETE FROM chat WHERE chatid = ?";
+            String query = "DELETE FROM message WHERE messageid= ?";
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setInt(1, id);

@@ -12,26 +12,34 @@ public class MessageDAOTest {
 	private static ChatDAO chatService = new ChatDAO();
 
 	public static boolean run() {
-		Message result = new Message("Test", userService.get(1), chatService.get(1));
+		Message result = new Message(9999, "Test", userService.get(1), chatService.get(2));
 
-		Message response = messageService.get(2);
-
-		if (!messageService.insert(result))
+		if (messageService.insert(result))
 			return false;
 
-		if (!response.equals(result))
+		Message response = messageService.get(9999);
+
+		if (!response.equals(result)) {
+			messageService.delete(9999);
 			return false;
+		}
 
 		response.setText("Update Text");
 
-		if (!messageService.update(response))
+		if (!messageService.update(response)) {
+			messageService.delete(9999);
 			return false;
+		}
 
-		if (!response.equals(messageService.get(2)))
+		if (!response.equals(messageService.get(9999))) {
+			messageService.delete(9999);
 			return false;
+		}
 
-		if (!messageService.delete(2))
+		if (messageService.delete(9999)) {
+			messageService.delete(9999);
 			return false;
+		}
 
 		return true;
 	}

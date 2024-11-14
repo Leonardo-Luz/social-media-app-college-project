@@ -25,11 +25,21 @@ public class ChatDAO implements DAO<Chat> {
     @Override
     public boolean insert(Chat model) {
         try {
-            String query = "INSERT INTO chat(title, adminid) VALUES (?, ?)";
+
+            String query;
+
+            if (model.getChatId() != 0)
+                query = "INSERT INTO chat(title, adminid, chatid) VALUES (?, ?, ?)";
+            else
+                query = "INSERT INTO chat(title, adminid) VALUES (?, ?)";
+
             PreparedStatement ps = this.db.prepareStatement(query);
 
             ps.setString(1, model.getTitle());
             ps.setInt(2, model.getAdmin().getUserId());
+
+            if (model.getChatId() != 0)
+                ps.setInt(3, model.getChatId());
 
             // insert into CHAT_USERS table
 
@@ -84,6 +94,8 @@ public class ChatDAO implements DAO<Chat> {
     @Override
     public List<Chat> list(int limit, int offset) {
         try {
+            UserDAO service = new UserDAO();
+
             List<Chat> list = new ArrayList<>();
 
             String query = """
@@ -100,6 +112,7 @@ public class ChatDAO implements DAO<Chat> {
             while (response.next()) {
                 list.add(new Chat(
                         response.getInt("chatid"),
+                        service.get(response.getInt("adminid")),
                         response.getString("title"),
                         response.getDate("createdat"),
                         response.getDate("updatedat")));
@@ -118,9 +131,11 @@ public class ChatDAO implements DAO<Chat> {
     @Override
     public Chat get(int id) {
         try {
+            UserDAO service = new UserDAO();
+
             String query = """
                         SELECT chatid, title, adminid, createdat, updatedat FROM chat
-                        WHERE chatid = ?
+                        WHERE chatid=?
                         LIMIT 1
                     """;
             PreparedStatement ps = this.db.prepareStatement(query);
@@ -132,6 +147,7 @@ public class ChatDAO implements DAO<Chat> {
             if (response.next()) {
                 return new Chat(
                         response.getInt("chatid"),
+                        service.get(response.getInt("adminid")),
                         response.getString("title"),
                         response.getDate("createdat"),
                         response.getDate("updatedat"));

@@ -9,27 +9,34 @@ public class ChatDAOTest {
 	private static UserDAO userService = new UserDAO();
 
 	public static boolean run() {
-		Chat result = new Chat("Test", userService.get(1));
+		Chat result = new Chat(9999, "Test", userService.get(1));
 
-		Chat response = chatService.get(2);
-
-		if (!chatService.insert(result))
+		if (chatService.insert(result))
 			return false;
 
-		if (!response.equals(result))
+		Chat response = chatService.get(9999);
+
+		if (!response.equals(result)) {
+			chatService.delete(9999);
 			return false;
+		}
 
 		response.setTitle("Update Title");
 
-		if (!chatService.update(response))
+		if (!chatService.update(response)) {
+			chatService.delete(9999);
 			return false;
+		}
 
-		if (!response.equals(chatService.get(2)))
+		if (!response.equals(chatService.get(9999))) {
+			chatService.delete(9999);
 			return false;
+		}
 
-		if (!chatService.delete(2))
+		if (chatService.delete(9999)) {
+			chatService.delete(9999);
 			return false;
-
+		}
 		return true;
 	}
 

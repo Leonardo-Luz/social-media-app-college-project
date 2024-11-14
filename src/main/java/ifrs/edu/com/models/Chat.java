@@ -14,8 +14,9 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(int chatId, String title, Date createdAt, Date updatedAt) {
+    public Chat(int chatId, User admin, String title, Date createdAt, Date updatedAt) {
         this.setChatId(chatId);
+        this.setAdmin(admin);
         this.setTitle(title);
 
         this.setUpdatedAt(createdAt);
@@ -34,6 +35,12 @@ public class Chat {
     }
 
     public Chat(String title, User admin) {
+        this.setTitle(title);
+        this.setAdmin(admin);
+    }
+
+    public Chat(int chatId, String title, User admin) {
+        this.setChatId(chatId);
         this.setTitle(title);
         this.setAdmin(admin);
     }
@@ -88,9 +95,9 @@ public class Chat {
 
     @Override
     public String toString() {
-        return "\nChat" + this.chatId +
+        return "\nChat " + this.chatId +
                 "\nTitle: " + this.title +
-                "\nadmin: " + this.admin.getUsername();
+                "\nAdmin: " + this.admin.getUsername();
     }
 
     @Override

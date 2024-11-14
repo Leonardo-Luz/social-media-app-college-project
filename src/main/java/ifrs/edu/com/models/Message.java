@@ -32,6 +32,14 @@ public class Message {
         this.setChat(chat);
     }
 
+    public Message(int messageId, String text, User user, Chat chat) {
+        this.setMessageId(messageId);
+        this.setText(text);
+
+        this.setUser(user);
+        this.setChat(chat);
+    }
+
     public Chat getChat() {
         return chat;
     }

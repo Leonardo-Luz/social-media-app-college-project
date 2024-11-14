@@ -52,6 +52,13 @@ public class User {
         this.setPassword(password);
     }
 
+    public User(int usersId, String name, String username, String password) { // User Request Body
+        this.setUserId(usersId);
+        this.setName(name);
+        this.setUsername(username);
+        this.setPassword(password);
+    }
+
     public int getUserId() {
         return userId;
     }
