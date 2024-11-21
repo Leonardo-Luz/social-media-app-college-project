@@ -3,8 +3,6 @@ package ifrs.edu.com.controllers;
 
 import java.io.IOException;
 
-import ifrs.edu.com.service.MessageDAO;
-import ifrs.edu.com.tests.models.MessageModelTest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +17,7 @@ public class MainController {
     private Button button;
 
     @FXML
-    private void changeSceneHandler(ActionEvent e) throws IOException {
+    private void loginSceneHandler(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
         BorderPane page = loader.load();
 
@@ -31,14 +29,7 @@ public class MainController {
     }
 
     @FXML
-    private void initialize() {
-
-        // Initialize the button action
-        button.setOnAction(event -> {
-            MessageDAO service = new MessageDAO();
-
-            System.out.println(service.get(1));
-        });
-
+    private void registerSceneHandler(ActionEvent ev) throws IOException {
+        System.out.println("CHANGE SCENE");
     }
 }

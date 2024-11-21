@@ -1,0 +1,49 @@
+.form-header-container {
+	-fx-alignment: center;
+	-fx-spacing: 120px;
+
+	-fx-padding: 12px;
+
+	-fx-background-color: lightgray;
+}
+
+.form-header-title {
+	-fx-font-weight: bold;
+	-fx-color: darkturquoise;
+}
+
+.form-header-exit {
+	-fx-cursor: crosshair;
+	-fx-font-weight: bold;
+	-fx-color: darkturquoise;
+
+	-fx-background-color: none;
+	-fx-border: none;
+}
+
+
+.form-container {
+	-fx-alignment: center;
+	-fx-spacing: 50px;
+}
+
+.form-section {
+	-fx-alignment: center;
+	-fx-spacing: 40px;
+}
+
+.form-input {
+	-fx-text-alignment: right;
+}
+
+.form-buttons {
+	-fx-alignment: center;
+	-fx-spacing: 40px;
+}
+
+.form-button {
+	-fx-background-color: darkgray;
+	-fx-padding: 8px;
+
+	-fx-effect: dropshadow(gaussian, rgb(0, 0, 0, 0.5), 10, 0, 0, 6);
+}

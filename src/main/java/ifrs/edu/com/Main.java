@@ -32,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         AuthProvider auth = new AuthProvider();
 
-        tests();
+        // tests();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
