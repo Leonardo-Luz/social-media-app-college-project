@@ -22,7 +22,7 @@ public class MainController {
         BorderPane page = loader.load();
 
         Stage stage = (Stage) button.getScene().getWindow();
-        Scene scene = new Scene(page, 640, 480);
+        Scene scene = new Scene(page, 340, 480);
         stage.setScene(scene);
         stage.setTitle("Chat");
         stage.show();

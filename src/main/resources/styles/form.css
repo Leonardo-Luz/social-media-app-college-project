@@ -24,7 +24,7 @@
 
 .form-container {
 	-fx-alignment: center;
-	-fx-spacing: 50px;
+	-fx-spacing: 35px;
 }
 
 .form-section {
@@ -32,9 +32,9 @@
 	-fx-spacing: 40px;
 }
 
-.form-input {
-	-fx-text-alignment: right;
-}
+.form-input-label {}
+
+.form-input {}
 
 .form-buttons {
 	-fx-alignment: center;

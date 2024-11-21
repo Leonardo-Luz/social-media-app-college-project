@@ -11,9 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class RegisterController {
+
     @FXML
-    private Button toRegisterButton;
+    private Button toLoginButton;
 
     @FXML
     private void exitApplication(ActionEvent ev) throws IOException {
@@ -21,16 +22,16 @@ public class LoginController {
     }
 
     @FXML
-    private void loginHandler(ActionEvent ev) throws IOException {
-        System.out.println("login...");
+    private void registerHandler(ActionEvent ev) throws IOException {
+        System.out.println("register...");
     }
 
     @FXML
-    private void registerSceneHandler(ActionEvent ev) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
+    private void loginSceneHandler(ActionEvent ev) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
         BorderPane page = loader.load();
 
-        Stage stage = (Stage) toRegisterButton.getScene().getWindow();
+        Stage stage = (Stage) toLoginButton.getScene().getWindow();
         Scene scene = new Scene(page, 340, 480);
         stage.setScene(scene);
         stage.setTitle("Chat");

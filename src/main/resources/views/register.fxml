@@ -12,12 +12,12 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ifrs.edu.com.controllers.LoginController"
+    fx:controller="ifrs.edu.com.controllers.RegisterController"
     stylesheets="@../styles/form.css"
 >
     <top>
         <HBox styleClass="form-header-container">
-            <Label text="Login" styleClass="form-header-title" />
+            <Label text="Register" styleClass="form-header-title" />
             <Button fx:id="loginExit" text="X"
                 layoutX="400"
                 layoutY="250"
@@ -30,9 +30,18 @@
     <center>
         <VBox styleClass="form-container">
             <HBox styleClass="form-section">
-                <Label text="Username:" styleClass="form-input-label"
-                    minWidth="120"
+                <Label text="Name:" styleClass="form-input-label"
+			minWidth="120"
+		/>
+                <TextField
+                    fx:id="nameInput"
+                    GridPane.columnIndex="1"
                 />
+            </HBox>
+            <HBox styleClass="form-section">
+                <Label text="Username:" styleClass="form-input-label"
+			minWidth="120"
+		/>
                 <TextField
                     fx:id="usernameInput"
                     GridPane.columnIndex="1"
@@ -40,26 +49,36 @@
             </HBox>
             <HBox styleClass="form-section">
                 <Label text="Password:" styleClass="form-input-label"
-                    minWidth="120"
-                />
+			minWidth="120"
+		/>
                 <PasswordField
                     fx:id="passwordInput"
+                    GridPane.columnIndex="1"
+                />
+            </HBox>
+            <HBox styleClass="form-section">
+                <Label text="Confirm password:" styleClass="form-input-label"
+			minWidth="120"
+			maxWidth="120"
+		/>
+                <PasswordField
+                    fx:id="confirmPasswordInput"
                     GridPane.columnIndex="1"
                 />
             </HBox>
             <VBox
                 styleClass="form-buttons"
             >
-                <Button fx:id="loginButton" text="Login"
+                <Button fx:id="registerButton" text="Register"
                     layoutX="400"
                     layoutY="250"
                     styleClass="form-button"
-                    onAction="#loginHandler"
+                    onAction="#registerHandler"
                 />
                 <Button
-                    fx:id="toRegisterButton"
-                    text="Dont has an account? Register now!"
-                    onAction="#registerSceneHandler"
+		    fx:id="toLoginButton"
+                    text="Alredy has an account ? Login now!"
+                    onAction="#loginSceneHandler"
                 />
             </VBox>
         </VBox>

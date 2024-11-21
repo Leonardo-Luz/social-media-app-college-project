@@ -38,7 +38,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
             BorderPane root = loader.load();
 
-            Scene scene = new Scene(root, 640, 480);
+            Scene scene = new Scene(root, 340, 480);
             stage.setScene(scene);
             stage.setTitle("Chat");
             stage.show();
