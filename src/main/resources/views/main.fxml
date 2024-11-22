@@ -17,13 +17,11 @@
                 layoutX="400"
                 layoutY="250"
             />
-            <Button fx:id="button" text="Registrar" layoutX="350.0" layoutY="250.0"
-                onAction="#registerSceneHandler"
-            />
-            <Button fx:id="navLogin" text="Login"
+
+            <Button fx:id="profile" text="Profile"
                 layoutX="400"
                 layoutY="250"
-                onAction="#loginSceneHandler"
+                onAction="#profileSceneHandler"
             />
         </HBox>
     </top>

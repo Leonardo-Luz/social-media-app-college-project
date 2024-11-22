@@ -35,7 +35,7 @@ public class Main extends Application {
         // tests();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
             BorderPane root = loader.load();
 
             Scene scene = new Scene(root, 340, 480);
