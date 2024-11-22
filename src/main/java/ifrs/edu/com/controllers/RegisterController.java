@@ -38,6 +38,24 @@ public class RegisterController {
 
     @FXML
     private void registerHandler(ActionEvent ev) throws IOException {
+        if (nameInput.getText().length() < 3) {
+            System.err.println("Name has to be at least 3 letters");
+
+            return;
+        } else if (usernameInput.getText().length() < 3) {
+            System.err.println("Username has to be at least 3 letters");
+
+            return;
+        } else if (passwordInput.getText().length() < 3) {
+            System.err.println("Password has to be at least 3 letters");
+
+            return;
+        } else if (!passwordInput.getText().equals(confirmPasswordInput.getText())) {
+            System.err.println("Passwords dont match");
+
+            return;
+        }
+
         UserDAO service = new UserDAO();
 
         User newUser = new User(nameInput.getText(), usernameInput.getText(), passwordInput.getText());
