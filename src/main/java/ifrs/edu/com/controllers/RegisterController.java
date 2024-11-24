@@ -1,21 +1,29 @@
 package ifrs.edu.com.controllers;
 
+import javafx.fxml.FXML;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+
 import java.io.IOException;
 
-import ifrs.edu.com.models.User;
-import ifrs.edu.com.service.UserDAO;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import javafx.event.ActionEvent;
+
+import ifrs.edu.com.context.AuthProvider;
+import ifrs.edu.com.models.User;
+import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.controllers.SceneController;
+
 public class RegisterController {
+    SceneController sceneController = new SceneController();
+
     @FXML
     private Button toLoginButton;
 
@@ -58,28 +66,20 @@ public class RegisterController {
 
         UserDAO service = new UserDAO();
 
-        User newUser = new User(nameInput.getText(), usernameInput.getText(), passwordInput.getText());
+        String name = nameInput.getText();
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
 
-        if (!service.insert(newUser)) {
+        if (AuthProvider.register(service, name, username, password)) {
             System.out.println("New user succefully inserted.");
-            changeScene("/views/main.fxml");
+            System.out.println("AA: " + AuthProvider.getUser());
+            sceneController.changeScene("/views/main.fxml", toLoginButton);
         } else
             System.err.println("Error on user insert!");
     }
 
     @FXML
     private void loginSceneHandler(ActionEvent ev) throws IOException {
-        changeScene("/views/login.fxml");
-    }
-
-    private void changeScene(String route) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(route));
-        BorderPane page = loader.load();
-
-        Stage stage = (Stage) toLoginButton.getScene().getWindow();
-        Scene scene = new Scene(page, 340, 480);
-        stage.setScene(scene);
-        stage.setTitle("Chat");
-        stage.show();
+        sceneController.changeScene("/views/login.fxml", toLoginButton);
     }
 }

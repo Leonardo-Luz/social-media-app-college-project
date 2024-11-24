@@ -32,4 +32,9 @@ public class MainController {
     private void registerSceneHandler(ActionEvent ev) throws IOException {
         System.out.println("CHANGE SCENE");
     }
+
+    @FXML
+    private void profileSceneHandler(ActionEvent ev) throws IOException {
+        System.out.println("CHANGE SCENE");
+    }
 }

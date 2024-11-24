@@ -2,18 +2,26 @@ package ifrs.edu.com.controllers;
 
 import java.io.IOException;
 
+import ifrs.edu.com.context.AuthProvider;
+import ifrs.edu.com.service.UserDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class LoginController {
+    SceneController sceneController = new SceneController();
+
     @FXML
     private Button toRegisterButton;
+
+    @FXML
+    private TextField usernameInput;
+
+    @FXML
+    private PasswordField passwordInput;
 
     @FXML
     private void exitApplication(ActionEvent ev) throws IOException {
@@ -22,18 +30,30 @@ public class LoginController {
 
     @FXML
     private void loginHandler(ActionEvent ev) throws IOException {
-        System.out.println("login...");
+        if (usernameInput.getText().length() < 3) {
+            System.err.println("Username has to be at least 3 letters");
+
+            return;
+        } else if (passwordInput.getText().length() < 3) {
+            System.err.println("Password has to be at least 3 letters");
+
+            return;
+        }
+        UserDAO service = new UserDAO();
+
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
+
+        if (AuthProvider.login(service, username, password)) {
+            System.out.println("User succefully logged.");
+            System.out.println("AA: " + AuthProvider.getUser());
+            sceneController.changeScene("/views/main.fxml", toRegisterButton);
+        } else
+            System.err.println("Error on login!");
     }
 
     @FXML
     private void registerSceneHandler(ActionEvent ev) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
-        BorderPane page = loader.load();
-
-        Stage stage = (Stage) toRegisterButton.getScene().getWindow();
-        Scene scene = new Scene(page, 340, 480);
-        stage.setScene(scene);
-        stage.setTitle("Chat");
-        stage.show();
+        sceneController.changeScene("/views/register.fxml", toRegisterButton);
     }
 }
