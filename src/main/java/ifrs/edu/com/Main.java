@@ -16,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     public static void tests() {
         System.out.println("User Model Test: " + (UserModelTest.run() ? "PASS" : "DIDNT PASS"));
         System.out.println("User Service Test: " + (UserDAOTest.run() ? "PASS" : "DIDNT PASS"));
@@ -30,8 +29,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        AuthProvider auth = new AuthProvider();
-
         // tests();
 
         try {
