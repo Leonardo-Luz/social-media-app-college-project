@@ -2,7 +2,6 @@ package ifrs.edu.com.controllers;
 
 import javafx.fxml.FXML;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
@@ -10,16 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
 import javafx.event.ActionEvent;
 
 import ifrs.edu.com.context.AuthProvider;
-import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
-import ifrs.edu.com.controllers.SceneController;
 
 public class RegisterController {
     SceneController sceneController = new SceneController();

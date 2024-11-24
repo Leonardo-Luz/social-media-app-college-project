@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -39,6 +40,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         // runTests();
+
+        Font.font("Fira Code");
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));

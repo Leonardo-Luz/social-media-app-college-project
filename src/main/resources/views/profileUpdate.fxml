@@ -5,12 +5,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ifrs.edu.com.controllers.ProfileController"
-    stylesheets="@../styles/profile.css"
+    fx:controller="ifrs.edu.com.controllers.ProfileUpdateController"
+    stylesheets="@../styles/profileUpdate.css"
 >
     <center>
         <VBox styleClass="profile-container">
@@ -20,26 +22,39 @@
                 <Label text="Name:"
                     minWidth="90"
                 />
-                <Label fx:id="name" text="LOADING" />
+                <TextField
+                    fx:id="nameInput"
+                />
             </HBox>
 
             <HBox styleClass="label-container">
-                <Label text="Username"
+                <Label text="Username:"
                     minWidth="90"
                 />
-                <Label fx:id="username" text="LOADING" />
+                <TextField
+                    fx:id="usernameInput"
+                />
             </HBox>
 
             <HBox styleClass="label-container">
-                <Button fx:id="updateAccount" text="Edit Account"
-                    layoutX="400"
-                    layoutY="250"
-                    onAction="#updateSceneHandler"
+                <Label text="Password:"
+                    minWidth="90"
                 />
-                <Button fx:id="deleteAccount" text="Delete Account"
+                <PasswordField
+                    fx:id="passwordInput"
+                />
+            </HBox>
+
+            <HBox styleClass="label-container">
+                <Button text="Cancel"
                     layoutX="400"
                     layoutY="250"
-                    onAction="#deleteHandler"
+                    onAction="#cancelHandler"
+                />
+                <Button text="Confirm"
+                    layoutX="400"
+                    layoutY="250"
+                    onAction="#confirmHandler"
                 />
             </HBox>
         </VBox>
