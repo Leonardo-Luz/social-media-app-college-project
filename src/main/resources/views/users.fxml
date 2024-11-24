@@ -8,11 +8,11 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ifrs.edu.com.controllers.MainController"
-    stylesheets="@../styles/main.css"
+    fx:controller="ifrs.edu.com.controllers.UsersController"
+    stylesheets="@../styles/users.css"
 >
     <center>
-        <Label text="CHAT" />
+        <Label text="USERS" />
     </center>
 
     <bottom>
@@ -20,13 +20,13 @@
             <Button fx:id="users" text="Usuários"
                 layoutX="400"
                 layoutY="250"
-                onAction="#usersSceneHandler"
+                disable="true"
             />
 
             <Button fx:id="chat" text="Chat"
                 layoutX="400"
                 layoutY="250"
-                disable="true"
+                onAction="#chatSceneHandler"
             />
 
             <Button fx:id="profile" text="Perfil"

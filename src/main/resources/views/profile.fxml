@@ -3,21 +3,32 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ifrs.edu.com.controllers.MainController"
-    stylesheets="@../styles/main.css"
+    fx:controller="ifrs.edu.com.controllers.ProfileController"
+    stylesheets="@../styles/profile.css"
 >
     <center>
-        <Label text="CHAT" />
+        <VBox>
+            <Label text="profile" />
+            <Label fx:id="name" text="LOADING" />
+            <Label fx:id="username" text="LOADING" />
+
+            <Button fx:id="deleteAccount" text="Delete Account"
+                layoutX="400"
+                layoutY="250"
+                onAction="#deleteHandler"
+            />
+        </VBox>
     </center>
 
     <bottom>
         <HBox styleClass="nav-container">
-            <Button fx:id="users" text="Usuários"
+            <Button fx:id="profile" text="Usuários"
                 layoutX="400"
                 layoutY="250"
                 onAction="#usersSceneHandler"
@@ -26,13 +37,13 @@
             <Button fx:id="chat" text="Chat"
                 layoutX="400"
                 layoutY="250"
-                disable="true"
+                onAction="#chatSceneHandler"
             />
 
             <Button fx:id="profile" text="Perfil"
                 layoutX="400"
                 layoutY="250"
-                onAction="#profileSceneHandler"
+                disable="true"
             />
         </HBox>
     </bottom>

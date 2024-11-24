@@ -6,21 +6,16 @@ import ifrs.edu.com.service.UserDAO;
 public class AuthProvider {
     private static User user = null;
 
-    public static boolean login(UserDAO service, String username, String password) {
+    public static void login(UserDAO service, String username, String password) {
         User logged = service.login(username, password);
 
         AuthProvider.user = logged;
-
-        return user != null;
     }
 
-    public static boolean register(UserDAO service, String name, String username, String password) {
-        if (!service.insert(new User(name, username, password))) {
-            AuthProvider.user = service.login(username, password);
-            return true;
-        }
+    public static void register(UserDAO service, String name, String username, String password) {
+        service.insert(new User(name, username, password));
 
-        return false;
+        AuthProvider.user = service.login(username, password);
     }
 
     public static boolean isLogged() {
@@ -30,4 +25,20 @@ public class AuthProvider {
     public static User getUser() {
         return AuthProvider.user;
     }
+
+    public static void logout() {
+        AuthProvider.user = null;
+    }
+
+    public static boolean deleteAccount(UserDAO service) {
+        Integer id = user.getUserId();
+
+        AuthProvider.logout();
+
+        return service.delete(id);
+    }
+
+    // public static boolean isAdmin(){
+    // return user.role == "admin"
+    // }
 }

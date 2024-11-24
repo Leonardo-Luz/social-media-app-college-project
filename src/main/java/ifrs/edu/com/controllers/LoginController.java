@@ -44,9 +44,10 @@ public class LoginController {
         String username = usernameInput.getText();
         String password = passwordInput.getText();
 
-        if (AuthProvider.login(service, username, password)) {
+        AuthProvider.login(service, username, password);
+
+        if (AuthProvider.isLogged()) {
             System.out.println("User succefully logged.");
-            System.out.println("AA: " + AuthProvider.getUser());
             sceneController.changeScene("/views/main.fxml", toRegisterButton);
         } else
             System.err.println("Error on login!");
