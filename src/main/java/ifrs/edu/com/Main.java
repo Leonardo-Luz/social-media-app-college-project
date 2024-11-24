@@ -12,12 +12,13 @@ import ifrs.edu.com.tests.services.UserDAOTest;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
-    public static void tests() {
+    public static void runTests() {
         System.out.println("User Model Test: " + (UserModelTest.run() ? "PASS" : "DIDNT PASS"));
         System.out.println("User Service Test: " + (UserDAOTest.run() ? "PASS" : "DIDNT PASS"));
 
@@ -28,17 +29,25 @@ public class Main extends Application {
         System.out.println("Chat Service Test: " + (ChatDAOTest.run() ? "PASS" : "DIDNT PASS"));
     }
 
+    private void addQuitApplication(Stage stage) {
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, ev -> {
+            if (KeyCode.ESCAPE.equals(ev.getCode()))
+                stage.close();
+        });
+    }
+
     @Override
     public void start(Stage stage) {
-        AuthProvider auth = new AuthProvider();
-
-        // tests();
+        // runTests();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
             BorderPane root = loader.load();
 
             Scene scene = new Scene(root, 340, 480);
+
+            addQuitApplication(stage);
+
             stage.setScene(scene);
             stage.setTitle("Chat");
             stage.show();
