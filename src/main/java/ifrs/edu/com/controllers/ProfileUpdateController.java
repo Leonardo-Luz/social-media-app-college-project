@@ -1,4 +1,3 @@
-
 package ifrs.edu.com.controllers;
 
 import java.io.IOException;
@@ -10,36 +9,47 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
-public class ProfileController {
+public class ProfileUpdateController {
     SceneController sceneController = new SceneController();
 
     @FXML
     private Button chat;
 
     @FXML
-    private Label name;
+    private TextField nameInput;
 
     @FXML
-    private Label username;
+    private TextField usernameInput;
+
+    @FXML
+    private PasswordField passwordInput;
 
     @FXML
     private void initialize() {
         User user = AuthProvider.getUser();
 
-        name.setText(user.getName());
-        username.setText(user.getUsername());
+        nameInput.setText(user.getName());
+        usernameInput.setText(user.getUsername());
+        passwordInput.setText(user.getPassword());
     }
 
     @FXML
-    private void updateSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/profileUpdate.fxml", chat);
+    private void cancelHandler(ActionEvent ev) throws IOException {
+        sceneController.changeScene("/views/profile.fxml", chat);
     }
 
     @FXML
-    private void deleteHandler(ActionEvent ev) {
+    private void confirmHandler(ActionEvent ev) throws IOException {
+        User user = AuthProvider.getUser();
+
         UserDAO service = new UserDAO();
-        AuthProvider.deleteAccount(service);
+        service.update(
+                new User(user.getUserId(), nameInput.getText(), usernameInput.getText(), passwordInput.getText()));
+
+        sceneController.changeScene("/views/profile.fxml", chat);
     }
 
     @FXML

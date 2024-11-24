@@ -1,0 +1,22 @@
+.profile-title {
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+}
+
+.profile-container {
+	-fx-alignment: center;
+	-fx-spacing: 16px;
+}
+
+.label-container {
+	-fx-alignment: center;
+	-fx-spacing: 20px;
+}
+
+.nav-container {
+	-fx-background-color: darkgray;
+	-fx-min-height: 100px;
+
+	-fx-alignment: center;
+	-fx-spacing: 20px;
+}
