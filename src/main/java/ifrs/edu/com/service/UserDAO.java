@@ -99,7 +99,7 @@ public class UserDAO implements DAO<User> {
             List<User> list = new ArrayList<>();
 
             String query = """
-                        SELECT usersid, name, username, password, createdat, updatedat FROM users
+                        SELECT * FROM users
                         LIMIT ? OFFSET ?
                     """;
             PreparedStatement ps = this.db.prepareStatement(query);

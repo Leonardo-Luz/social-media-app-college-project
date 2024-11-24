@@ -70,7 +70,9 @@ public class RegisterController {
         String username = usernameInput.getText();
         String password = passwordInput.getText();
 
-        if (AuthProvider.register(service, name, username, password)) {
+        AuthProvider.register(service, name, username, password);
+
+        if (AuthProvider.isLogged()) {
             System.out.println("New user succefully inserted.");
             System.out.println("AA: " + AuthProvider.getUser());
             sceneController.changeScene("/views/main.fxml", toLoginButton);

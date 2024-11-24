@@ -1,0 +1,7 @@
+.nav-container {
+	-fx-background-color: darkgray;
+	-fx-min-height: 100px;
+
+	-fx-alignment: center;
+	-fx-spacing: 20px;
+}
