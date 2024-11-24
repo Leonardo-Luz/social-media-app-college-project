@@ -13,16 +13,30 @@
     stylesheets="@../styles/profile.css"
 >
     <center>
-        <VBox>
-            <Label text="profile" />
-            <Label fx:id="name" text="LOADING" />
-            <Label fx:id="username" text="LOADING" />
+        <VBox styleClass="profile-container">
+            <Label text="Profile" styleClass="profile-title" />
 
-            <Button fx:id="deleteAccount" text="Delete Account"
-                layoutX="400"
-                layoutY="250"
-                onAction="#deleteHandler"
-            />
+            <HBox styleClass="label-container">
+                <Label text="Name:"
+                    minWidth="90"
+                />
+                <Label fx:id="name" text="LOADING" />
+            </HBox>
+
+            <HBox styleClass="label-container">
+                <Label text="Username"
+                    minWidth="90"
+                />
+                <Label fx:id="username" text="LOADING" />
+            </HBox>
+
+            <HBox styleClass="label-container">
+                <Button fx:id="deleteAccount" text="Delete Account"
+                    layoutX="400"
+                    layoutY="250"
+                    onAction="#deleteHandler"
+                />
+            </HBox>
         </VBox>
     </center>
 
