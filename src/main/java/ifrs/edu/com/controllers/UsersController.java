@@ -1,20 +1,28 @@
 package ifrs.edu.com.controllers;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+
 import java.io.IOException;
 
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.Label;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class UsersController {
     SceneController sceneController = new SceneController();
@@ -35,10 +43,56 @@ public class UsersController {
     @FXML
     private TableView<User> usersTable;
 
+    private void loadUserProprieties() {
+        User selected = this.usersTable.getSelectionModel().getSelectedItem();
+        UserDAO service = new UserDAO();
+
+        if (selected != null) {
+            Stage popup = new Stage();
+            popup.addEventHandler(KeyEvent.KEY_RELEASED, ev -> {
+                if (KeyCode.ESCAPE.equals(ev.getCode()))
+                    popup.close();
+            });
+
+            Label label = new Label(selected.toString());
+            Button deleteButton = new Button("Delete");
+            deleteButton.setOnAction(ev -> {
+                if (!service.delete(selected.getUserId())) {
+                    System.out.println("User Deleted!");
+                    popup.close();
+                } else
+                    System.out.println("Error on user delete!");
+            });
+            VBox pane = new VBox(label, deleteButton);
+            pane.setAlignment(Pos.CENTER);
+            pane.setSpacing(12);
+            pane.minHeight(80);
+            pane.minWidth(100);
+
+            Scene window = new Scene(pane, 100, 100);
+            popup.setScene(window);
+            popup.setTitle("POPUP");
+
+            popup.show();
+        }
+    }
+
     private void loadTable() {
         UserDAO service = new UserDAO();
         this.users = FXCollections.observableArrayList(service.list(100, 0));
         this.usersTable.setItems(users);
+        this.usersTable.getSelectionModel().getTableView().setOnMouseClicked(ev -> {
+            if (ev.getClickCount() == 2 && !ev.isConsumed()) {
+                ev.consume();
+
+                loadUserProprieties();
+            }
+        });
+        this.usersTable.getSelectionModel().getTableView().setOnKeyTyped(ev -> {
+            if (ev.getCharacter().getBytes()[0] == '\r' || ev.getCharacter().getBytes()[0] == '\n') {
+                loadUserProprieties();
+            }
+        });
     }
 
     @FXML
