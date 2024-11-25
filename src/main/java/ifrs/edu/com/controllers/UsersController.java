@@ -3,8 +3,7 @@ package ifrs.edu.com.controllers;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 
-import java.io.IOException;
-
+import ifrs.edu.com.Main;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 
@@ -20,16 +19,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class UsersController {
-    SceneController sceneController = new SceneController();
     private ObservableList<User> users;
-
-    @FXML
-    private Button chat;
 
     @FXML
     private TableColumn<User, Integer> columnId;
@@ -105,12 +99,12 @@ public class UsersController {
     }
 
     @FXML
-    private void chatSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/main.fxml", chat);
+    private void chatSceneHandler(ActionEvent ev) {
+        Main.loadView("main");
     }
 
     @FXML
-    private void profileSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/profile.fxml", chat);
+    private void profileSceneHandler(ActionEvent ev) {
+        Main.loadView("profile");
     }
 }

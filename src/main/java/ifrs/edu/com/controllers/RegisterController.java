@@ -5,20 +5,15 @@ import javafx.application.Platform;
 
 import java.io.IOException;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import javafx.event.ActionEvent;
-
+import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.service.UserDAO;
 
 public class RegisterController {
-    SceneController sceneController = new SceneController();
-
-    @FXML
-    private Button toLoginButton;
 
     @FXML
     private TextField nameInput;
@@ -68,13 +63,13 @@ public class RegisterController {
         if (AuthProvider.isLogged()) {
             System.out.println("New user succefully inserted.");
             System.out.println("AA: " + AuthProvider.getUser());
-            sceneController.changeScene("/views/main.fxml", toLoginButton);
+            Main.loadView("main");
         } else
             System.err.println("Error on user insert!");
     }
 
     @FXML
-    private void loginSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/login.fxml", toLoginButton);
+    private void loginSceneHandler(ActionEvent ev) {
+        Main.loadView("login");
     }
 }

@@ -19,6 +19,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private static Stage stage;
+
     public static void runTests() {
         System.out.println("User Model Test: " + (UserModelTest.run() ? "PASS" : "DIDNT PASS"));
         System.out.println("User Service Test: " + (UserDAOTest.run() ? "PASS" : "DIDNT PASS"));
@@ -37,26 +39,31 @@ public class Main extends Application {
         });
     }
 
+    public static void loadView(String route) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(String.format("/views/%s.fxml", route)));
+            BorderPane page = loader.load();
+
+            Scene scene = new Scene(page, 340, 480);
+
+            Main.stage.setScene(scene);
+            Main.stage.setTitle("Chat");
+            Main.stage.show();
+        } catch (IOException err) {
+            System.out.println(err);
+        }
+    }
+
     @Override
-    public void start(Stage stage) {
+    public void start(Stage firstStage) {
+        stage = firstStage;
+        addQuitApplication(stage);
+
         // runTests();
 
         Font.font("Fira Code");
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
-            BorderPane root = loader.load();
-
-            Scene scene = new Scene(root, 340, 480);
-
-            addQuitApplication(stage);
-
-            stage.setScene(scene);
-            stage.setTitle("Chat");
-            stage.show();
-        } catch (IOException err) {
-            System.out.println(err);
-        }
+        Main.loadView("login");
     }
 
     public static void main(String[] args) {

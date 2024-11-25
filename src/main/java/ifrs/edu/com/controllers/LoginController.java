@@ -2,21 +2,16 @@ package ifrs.edu.com.controllers;
 
 import java.io.IOException;
 
+import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.service.UserDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController {
-    SceneController sceneController = new SceneController();
-
-    @FXML
-    private Button toRegisterButton;
-
     @FXML
     private TextField usernameInput;
 
@@ -48,13 +43,13 @@ public class LoginController {
 
         if (AuthProvider.isLogged()) {
             System.out.println("User succefully logged.");
-            sceneController.changeScene("/views/main.fxml", toRegisterButton);
+            Main.loadView("main");
         } else
             System.err.println("Error on login!");
     }
 
     @FXML
-    private void registerSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/register.fxml", toRegisterButton);
+    private void registerSceneHandler(ActionEvent ev) {
+        Main.loadView("register");
     }
 }

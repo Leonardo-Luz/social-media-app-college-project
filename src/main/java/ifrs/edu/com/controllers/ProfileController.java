@@ -1,21 +1,15 @@
 
 package ifrs.edu.com.controllers;
 
-import java.io.IOException;
-
+import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class ProfileController {
-    SceneController sceneController = new SceneController();
-
-    @FXML
-    private Button chat;
 
     @FXML
     private Label name;
@@ -32,8 +26,8 @@ public class ProfileController {
     }
 
     @FXML
-    private void updateSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/profileUpdate.fxml", chat);
+    private void updateSceneHandler(ActionEvent ev) {
+        Main.loadView("profileUpdate");
     }
 
     @FXML
@@ -43,12 +37,12 @@ public class ProfileController {
     }
 
     @FXML
-    private void chatSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/main.fxml", chat);
+    private void chatSceneHandler(ActionEvent ev) {
+        Main.loadView("main");
     }
 
     @FXML
-    private void usersSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/users.fxml", chat);
+    private void usersSceneHandler(ActionEvent ev) {
+        Main.loadView("users");
     }
 }

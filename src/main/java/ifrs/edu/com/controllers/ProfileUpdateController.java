@@ -1,23 +1,15 @@
 package ifrs.edu.com.controllers;
 
-import java.io.IOException;
-
+import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ProfileUpdateController {
-    SceneController sceneController = new SceneController();
-
-    @FXML
-    private Button chat;
-
     @FXML
     private TextField nameInput;
 
@@ -37,28 +29,28 @@ public class ProfileUpdateController {
     }
 
     @FXML
-    private void cancelHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/profile.fxml", chat);
+    private void cancelHandler(ActionEvent ev) {
+        Main.loadView("profile");
     }
 
     @FXML
-    private void confirmHandler(ActionEvent ev) throws IOException {
+    private void confirmHandler(ActionEvent ev) {
         User user = AuthProvider.getUser();
 
         UserDAO service = new UserDAO();
         service.update(
                 new User(user.getUserId(), nameInput.getText(), usernameInput.getText(), passwordInput.getText()));
 
-        sceneController.changeScene("/views/profile.fxml", chat);
+        Main.loadView("profile");
     }
 
     @FXML
-    private void chatSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/main.fxml", chat);
+    private void chatSceneHandler(ActionEvent ev) {
+        Main.loadView("main");
     }
 
     @FXML
-    private void usersSceneHandler(ActionEvent ev) throws IOException {
-        sceneController.changeScene("/views/users.fxml", chat);
+    private void usersSceneHandler(ActionEvent ev) {
+        Main.loadView("users");
     }
 }
