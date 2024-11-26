@@ -42,6 +42,11 @@
                     onAction="#deleteHandler"
                 />
             </HBox>
+            <Button fx:id="logout" text="Logout"
+                layoutX="400"
+                layoutY="250"
+                onAction="#logoutHandler"
+            />
         </VBox>
     </center>
 

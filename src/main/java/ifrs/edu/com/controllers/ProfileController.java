@@ -31,9 +31,17 @@ public class ProfileController {
     }
 
     @FXML
+    private void logoutHandler(ActionEvent ev) {
+        AuthProvider.logout();
+
+        Main.loadView("login");
+    }
+
+    @FXML
     private void deleteHandler(ActionEvent ev) {
         UserDAO service = new UserDAO();
         AuthProvider.deleteAccount(service);
+        Main.loadView("login");
     }
 
     @FXML
