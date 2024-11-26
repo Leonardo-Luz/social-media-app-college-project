@@ -1,8 +1,8 @@
 package ifrs.edu.com.tests.services;
 
 import ifrs.edu.com.models.Chat;
-import ifrs.edu.com.service.ChatDAO;
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.ChatDAO;
+import ifrs.edu.com.services.UserDAO;
 
 public class ChatDAOTest {
 	private static ChatDAO chatService = new ChatDAO();
