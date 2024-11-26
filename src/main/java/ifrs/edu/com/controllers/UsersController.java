@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 
 import ifrs.edu.com.Main;
+import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.service.UserDAO;
 
@@ -60,7 +61,7 @@ public class UsersController {
             VBox pane = new VBox(label, deleteButton);
             pane.setAlignment(Pos.CENTER);
             pane.setSpacing(12);
-            pane.minHeight(80);
+            pane.minHeight(140);
             pane.minWidth(100);
 
             Scene window = new Scene(pane, 100, 100);
@@ -74,7 +75,7 @@ public class UsersController {
     private void loadTable() {
         UserDAO service = new UserDAO();
         this.users = FXCollections.observableArrayList(service.list(100, 0));
-        this.usersTable.setItems(users);
+        this.usersTable.setItems(users.filtered(user -> user.getUserId() != AuthProvider.getUser().getUserId()));
         this.usersTable.getSelectionModel().getTableView().setOnMouseClicked(ev -> {
             if (ev.getClickCount() == 2 && !ev.isConsumed()) {
                 ev.consume();
