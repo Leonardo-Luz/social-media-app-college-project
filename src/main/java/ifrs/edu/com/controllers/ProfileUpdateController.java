@@ -36,12 +36,15 @@ public class ProfileUpdateController {
     @FXML
     private void confirmHandler(ActionEvent ev) {
         User user = AuthProvider.getUser();
+        user.setName(nameInput.getText());
+        user.setUsername(usernameInput.getText());
+        user.setPassword(passwordInput.getText());
 
         UserDAO service = new UserDAO();
-        service.update(
-                new User(user.getUserId(), nameInput.getText(), usernameInput.getText(), passwordInput.getText()));
+        service.update(user);
 
-        Main.loadView("profile");
+        AuthProvider.logout();
+        Main.loadView("login");
     }
 
     @FXML
