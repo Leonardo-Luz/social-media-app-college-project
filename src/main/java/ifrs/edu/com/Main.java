@@ -22,14 +22,14 @@ public class Main extends Application {
     private static Stage stage;
 
     public static void runTests() {
-        System.out.println("User Model Test: " + (UserModelTest.run() ? "PASS" : "DIDNT PASS"));
-        System.out.println("User Service Test: " + (UserDAOTest.run() ? "PASS" : "DIDNT PASS"));
+        System.out.println("User Model Test: " + (UserModelTest.run() ? "PASS" : "FAIL"));
+        System.out.println("User Service Test: " + (UserDAOTest.run() ? "PASS" : "FAIL"));
 
-        System.out.println("Message Model Test: " + (MessageModelTest.run() ? "PASS" : "DIDNT PASS"));
-        System.out.println("Message Service Test: " + (MessageDAOTest.run() ? "PASS" : "DIDNT PASS"));
+        System.out.println("Message Model Test: " + (MessageModelTest.run() ? "PASS" : "FAIL"));
+        System.out.println("Message Service Test: " + (MessageDAOTest.run() ? "PASS" : "FAIL"));
 
-        System.out.println("Chat Model Test: " + (ChatModelTest.run() ? "PASS" : "DIDNT PASS"));
-        System.out.println("Chat Service Test: " + (ChatDAOTest.run() ? "PASS" : "DIDNT PASS"));
+        System.out.println("Chat Model Test: " + (ChatModelTest.run() ? "PASS" : "FAIL"));
+        System.out.println("Chat Service Test: " + (ChatDAOTest.run() ? "PASS" : "FAIL"));
     }
 
     private void addQuitApplication(Stage stage) {
@@ -59,7 +59,7 @@ public class Main extends Application {
         stage = firstStage;
         addQuitApplication(stage);
 
-        // runTests();
+        runTests();
 
         Font.font("Fira Code");
 
