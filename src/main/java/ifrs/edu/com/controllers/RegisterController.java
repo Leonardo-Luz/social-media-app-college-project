@@ -3,15 +3,13 @@ package ifrs.edu.com.controllers;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 
-import java.io.IOException;
-
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import javafx.event.ActionEvent;
 import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.UserDAO;
 
 public class RegisterController {
 
@@ -28,12 +26,12 @@ public class RegisterController {
     private PasswordField confirmPasswordInput;
 
     @FXML
-    private void exitApplication(ActionEvent ev) throws IOException {
+    private void exitApplication(ActionEvent ev) {
         Platform.exit();
     }
 
     @FXML
-    private void registerHandler(ActionEvent ev) throws IOException {
+    private void registerHandler(ActionEvent ev) {
         if (nameInput.getText().length() < 3) {
             System.err.println("Name has to be at least 3 letters");
 

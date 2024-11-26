@@ -1,4 +1,4 @@
-package ifrs.edu.com.service;
+package ifrs.edu.com.services;
 
 import ifrs.edu.com.config.Database;
 import ifrs.edu.com.models.Chat;

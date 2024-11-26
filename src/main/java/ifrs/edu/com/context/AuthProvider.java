@@ -1,7 +1,7 @@
 package ifrs.edu.com.context;
 
 import ifrs.edu.com.models.User;
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.UserDAO;
 
 public class AuthProvider {
     private static User user = null;

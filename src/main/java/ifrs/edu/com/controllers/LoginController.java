@@ -1,10 +1,8 @@
 package ifrs.edu.com.controllers;
 
-import java.io.IOException;
-
 import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.UserDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,12 +17,12 @@ public class LoginController {
     private PasswordField passwordInput;
 
     @FXML
-    private void exitApplication(ActionEvent ev) throws IOException {
+    private void exitApplication(ActionEvent ev) {
         Platform.exit();
     }
 
     @FXML
-    private void loginHandler(ActionEvent ev) throws IOException {
+    private void loginHandler(ActionEvent ev) {
         if (usernameInput.getText().length() < 3) {
             System.err.println("Username has to be at least 3 letters");
 

@@ -3,7 +3,7 @@ package ifrs.edu.com.controllers;
 import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

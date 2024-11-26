@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import ifrs.edu.com.service.UserDAO;
+import ifrs.edu.com.services.UserDAO;
 
 public class User {
     private int userId;
