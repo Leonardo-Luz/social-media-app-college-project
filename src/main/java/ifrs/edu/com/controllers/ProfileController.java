@@ -4,7 +4,6 @@ package ifrs.edu.com.controllers;
 import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
-import ifrs.edu.com.services.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,8 +38,8 @@ public class ProfileController {
 
     @FXML
     private void deleteHandler(ActionEvent ev) {
-        UserDAO service = new UserDAO();
-        AuthProvider.deleteAccount(service);
+        AuthProvider.deleteAccount();
+
         Main.loadView("login");
     }
 

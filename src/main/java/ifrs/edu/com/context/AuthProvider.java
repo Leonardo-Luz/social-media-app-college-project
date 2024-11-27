@@ -6,13 +6,17 @@ import ifrs.edu.com.services.UserDAO;
 public class AuthProvider {
     private static User user = null;
 
-    public static void login(UserDAO service, String username, String password) {
+    public static void login(String username, String password) {
+        UserDAO service = new UserDAO();
+
         User logged = service.login(username, password);
 
         AuthProvider.user = logged;
     }
 
-    public static void register(UserDAO service, String name, String username, String password) {
+    public static void register(String name, String username, String password) {
+        UserDAO service = new UserDAO();
+
         service.insert(new User(name, username, password));
 
         AuthProvider.user = service.login(username, password);
@@ -30,7 +34,9 @@ public class AuthProvider {
         AuthProvider.user = null;
     }
 
-    public static boolean deleteAccount(UserDAO service) {
+    public static boolean deleteAccount() {
+        UserDAO service = new UserDAO();
+
         Integer id = user.getUserId();
 
         AuthProvider.logout();

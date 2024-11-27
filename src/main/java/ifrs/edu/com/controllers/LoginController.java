@@ -2,7 +2,6 @@ package ifrs.edu.com.controllers;
 
 import ifrs.edu.com.Main;
 import ifrs.edu.com.context.AuthProvider;
-import ifrs.edu.com.services.UserDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,12 +31,11 @@ public class LoginController {
 
             return;
         }
-        UserDAO service = new UserDAO();
 
         String username = usernameInput.getText();
         String password = passwordInput.getText();
 
-        AuthProvider.login(service, username, password);
+        AuthProvider.login(username, password);
 
         if (AuthProvider.isLogged()) {
             System.out.println("User succefully logged.");
