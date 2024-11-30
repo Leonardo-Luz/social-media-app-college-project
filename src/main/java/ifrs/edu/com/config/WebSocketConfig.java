@@ -7,19 +7,21 @@ import java.net.http.WebSocket.Listener;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import ifrs.edu.com.controllers.MainController;
 import io.github.cdimascio.dotenv.Dotenv;
+import javafx.application.Platform;
 
 public class WebSocketConfig {
     private static Dotenv dotenv = Dotenv.load();
 
-    private HttpClient client;
-    private WebSocket.Listener listener;
-    private WebSocket webSocket;
+    private static HttpClient client;
+    private static WebSocket.Listener listener;
+    public static WebSocket webSocket;
 
-    public WebSocketConfig() {
-        this.client = HttpClient.newHttpClient();
+    public static void start(MainController controller) {
+        WebSocketConfig.client = HttpClient.newHttpClient();
 
-        this.listener = new WebSocket.Listener() {
+        WebSocketConfig.listener = new WebSocket.Listener() {
             @Override
             public void onOpen(WebSocket webSocket) {
                 Listener.super.onOpen(webSocket);
@@ -29,9 +31,12 @@ public class WebSocketConfig {
             public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
                 System.out.println("Received message: " + data);
 
-                webSocket.sendText("Hello from client", true);
-                return CompletableFuture.completedFuture(null);
+                Platform.runLater(() -> {
+                    if (controller != null)
+                        controller.loadTable();
+                });
 
+                return CompletableFuture.completedFuture(null);
             }
 
             @Override
@@ -40,7 +45,7 @@ public class WebSocketConfig {
             }
         };
 
-        this.webSocket = client.newWebSocketBuilder()
+        WebSocketConfig.webSocket = client.newWebSocketBuilder()
                 .buildAsync(URI.create(dotenv.get("WS_URI")), listener)
                 .join();
 
