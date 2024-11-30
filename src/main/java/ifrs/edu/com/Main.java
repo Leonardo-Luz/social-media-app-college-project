@@ -59,7 +59,7 @@ public class Main extends Application {
         stage = firstStage;
         addQuitApplication(stage);
 
-        runTests();
+        // runTests();
 
         Font.font("Fira Code");
 

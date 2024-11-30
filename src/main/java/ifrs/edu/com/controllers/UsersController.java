@@ -54,6 +54,7 @@ public class UsersController {
             deleteButton.setOnAction(ev -> {
                 if (!service.delete(selected.getUserId())) {
                     System.out.println("User Deleted!");
+                    loadTable();
                     popup.close();
                 } else
                     System.out.println("Error on user delete!");

@@ -164,4 +164,17 @@ public class MessageDAO implements DAO<Message> {
 
         return null;
     }
+
+    public boolean clear() {
+        try {
+            String query = "DELETE FROM message WHERE true";
+            PreparedStatement ps = this.db.prepareStatement(query);
+
+            return ps.execute();
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return false;
+    }
 }
