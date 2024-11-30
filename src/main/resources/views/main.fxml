@@ -11,22 +11,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="ifrs.edu.com.controllers.MainController"
     stylesheets="@../styles/main.css"
 >
     <center>
-        <VBox styleClass="chat-container">
+        <VBox>
+            <TableView fx:id="messagesTable" styleClass="table">
+                <columns>
+                    <TableColumn fx:id="columnUsername" prefWidth="157.0" text="username" />
+                    <TableColumn fx:id="columnMessage" prefWidth="157.0" text="message" />
+                </columns>
+            </TableView>
+            <HBox styleClass="chat-input">
+                <TextField
+                    fx:id="chatInput"
+                />
+                <Button
+                    text="Enviar"
+                    onAction="#sendMessageHandler"
+                />
+            </HBox>
         </VBox>
-        <HBox styleClass="chat-input">
-            <TextField
-                fx:id="chatInput"
-            />
-            <Button
-                text="Enviar"
-                onAction="#sendMessageHandler"
-            />
-        </HBox>
     </center>
 
     <bottom>
