@@ -1,6 +1,7 @@
 package ifrs.edu.com.controllers;
 
 import ifrs.edu.com.Main;
+import ifrs.edu.com.config.WebSocketConfig;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.Chat;
 import ifrs.edu.com.models.Message;
@@ -20,7 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class MainController {
-    private ObservableList<Message> messages;
+    private static ObservableList<Message> messages;
 
     @FXML
     private TextField chatInput;
@@ -34,22 +35,32 @@ public class MainController {
     @FXML
     private TableView<Message> messagesTable;
 
-    private void loadMessages() {
+    private static void loadMessages() {
         MessageDAO service = new MessageDAO();
 
-        this.messages = FXCollections.observableArrayList(service.list(100, 0));
+        MainController.messages = FXCollections.observableArrayList(service.list(100, 0));
+    }
+
+    public void loadTable() {
+        MainController.loadMessages();
         this.messagesTable.setItems(messages);
     }
 
     @FXML
     private void initialize() {
+        try {
+            WebSocketConfig.start(this);
+        } catch (Exception err) {
+            System.out.println("Erro ao connectar ao WebSocket Server!");
+        }
+
         chatInput.setOnKeyTyped(ev -> {
             if (ev.getCharacter().getBytes()[0] == '\r' || ev.getCharacter().getBytes()[0] == '\n') {
                 sendMessageHandler();
             }
         });
 
-        this.loadMessages();
+        this.loadTable();
 
         columnUsername.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Message, String>, ObservableValue<String>>() {
@@ -74,7 +85,7 @@ public class MainController {
         if (chatInput.getText().equals("/clear")) {
             messageService.clear();
             chatInput.setText("");
-            loadMessages();
+            loadTable();
             return;
         }
 
@@ -84,8 +95,10 @@ public class MainController {
 
         messageService.insert(newMessage);
 
+        WebSocketConfig.webSocket.sendText(newMessage.getText(), true);
+
         chatInput.setText("");
-        loadMessages();
+        loadTable();
     }
 
     @FXML
