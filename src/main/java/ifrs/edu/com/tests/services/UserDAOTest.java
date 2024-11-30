@@ -6,35 +6,35 @@ import ifrs.edu.com.services.UserDAO;
 public class UserDAOTest {
 	private static UserDAO service = new UserDAO();
 
+	public static boolean abort() {
+		service.delete(9999);
+
+		return false;
+	}
+
 	public static boolean run() {
-		User result = new User(999, "TEST", "TEST", "TEST");
+		User result = new User(9999, "TEST", "TEST", "TEST");
 
 		if (service.insert(result))
-			return false;
+			return abort();
 
-		User response = service.get(999);
+		User response = service.get(9999);
 
-		if (!response.equals(result)) {
-			service.delete(999);
-			return false;
-		}
+		if (!response.equals(result))
+			return abort();
 
 		response.setName("Update Name");
 		response.setUsername("Update Username");
 		response.setPassword("Update Password");
 
-		if (!service.update(response)) {
-			service.delete(999);
-			return false;
-		}
+		if (!service.update(response))
+			return abort();
 
-		if (!response.equals(service.get(999))) {
-			service.delete(999);
-			return false;
-		}
+		if (!response.equals(service.get(9999)))
+			return abort();
 
-		if (service.delete(999))
-			return false;
+		if (service.delete(9999))
+			return abort();
 
 		return true;
 	}
