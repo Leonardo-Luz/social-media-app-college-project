@@ -5,6 +5,9 @@ import java.util.List;
 
 import ifrs.edu.com.config.WebSocketConfig;
 import ifrs.edu.com.models.Message;
+import ifrs.edu.com.services.ChatDAO;
+import ifrs.edu.com.services.MessageDAO;
+import ifrs.edu.com.services.UserDAO;
 import ifrs.edu.com.tests.models.ChatModelTest;
 import ifrs.edu.com.tests.models.MessageModelTest;
 import ifrs.edu.com.tests.models.UserModelTest;
@@ -43,6 +46,8 @@ public class Main extends Application {
 
     public static void loadView(String route) {
         try {
+            WebSocketConfig.close();
+
             FXMLLoader loader = new FXMLLoader(Main.class.getResource(String.format("/views/%s.fxml", route)));
             BorderPane page = loader.load();
 
@@ -60,6 +65,10 @@ public class Main extends Application {
     public void start(Stage firstStage) {
         stage = firstStage;
         addQuitApplication(stage);
+
+        UserDAO.connection();
+        MessageDAO.connection();
+        ChatDAO.connection();
 
         // runTests();
 

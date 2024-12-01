@@ -1,6 +1,5 @@
 package ifrs.edu.com.services;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<T> {

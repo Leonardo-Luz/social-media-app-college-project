@@ -93,8 +93,7 @@ public class MainController {
 
         messageService.insert(newMessage);
 
-        if (WebSocketConfig.webSocket != null)
-            WebSocketConfig.webSocket.sendText(newMessage.getText(), true);
+        WebSocketConfig.sendMessage(newMessage.getText());
 
         chatInput.setText("");
         loadTable();

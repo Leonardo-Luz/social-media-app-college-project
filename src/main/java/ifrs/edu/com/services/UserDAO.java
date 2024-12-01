@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements DAO<User> {
-    private Connection db;
+    private static Connection db;
 
-    public UserDAO() {
+    public static boolean connection() {
         try {
-            this.db = Database.connect();
+            UserDAO.db = Database.connect();
+            return true;
         } catch (SQLException err) {
             System.out.println(err);
+            return false;
         }
     }
 
@@ -33,7 +35,7 @@ public class UserDAO implements DAO<User> {
             else
                 query = "INSERT INTO users (name, username, password) VALUES (?, ?, ?)";
 
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getName());
             ps.setString(2, model.getUsername());
@@ -56,7 +58,7 @@ public class UserDAO implements DAO<User> {
     public boolean delete(int id) {
         try {
             String query = "DELETE FROM users WHERE usersid = ?";
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
@@ -75,15 +77,13 @@ public class UserDAO implements DAO<User> {
                         UPDATE users SET name=?, username=?, password=?
                         WHERE usersid = ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getName());
             ps.setString(2, model.getUsername());
             ps.setString(3, model.getPassword());
 
             ps.setInt(4, model.getUserId());
-
-            // update USER_FRIENDS table
 
             return ps.executeUpdate() > 0;
         } catch (SQLException err) {
@@ -102,7 +102,7 @@ public class UserDAO implements DAO<User> {
                         SELECT * FROM users
                         LIMIT ? OFFSET ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setInt(1, limit);
             ps.setInt(2, offset);
@@ -137,7 +137,7 @@ public class UserDAO implements DAO<User> {
                         WHERE usersid=?
                         LIMIT 1
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
@@ -170,7 +170,7 @@ public class UserDAO implements DAO<User> {
                         WHERE username=? AND password=?
                         LIMIT 1
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = UserDAO.db.prepareStatement(query);
 
             ps.setString(1, username);
             ps.setString(2, password);

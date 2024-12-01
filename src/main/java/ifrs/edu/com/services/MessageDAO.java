@@ -13,13 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDAO implements DAO<Message> {
-    private Connection db;
+    private static Connection db;
 
-    public MessageDAO() {
+    public static boolean connection() {
         try {
-            this.db = Database.connect();
+            MessageDAO.db = Database.connect();
+            return true;
         } catch (SQLException err) {
             System.out.println(err);
+            return false;
         }
     }
 
@@ -32,7 +34,7 @@ public class MessageDAO implements DAO<Message> {
                 query = "INSERT INTO message (text, usersid, chatid, messageid) VALUES (?, ?, ?, ?)";
             else
                 query = "INSERT INTO message (text, usersid, chatid) VALUES (?, ?, ?)";
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getText());
             ps.setInt(2, model.getUser().getUserId());
@@ -54,7 +56,7 @@ public class MessageDAO implements DAO<Message> {
     public boolean delete(int id) {
         try {
             String query = "DELETE FROM message WHERE messageid= ?";
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
@@ -73,7 +75,7 @@ public class MessageDAO implements DAO<Message> {
                         UPDATE message SET text=?, usersid=?, chatid=?
                         WHERE messageid = ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getText());
             ps.setInt(2, model.getUser().getUserId());
@@ -101,7 +103,7 @@ public class MessageDAO implements DAO<Message> {
                         SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
                         LIMIT ? OFFSET ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setInt(1, limit);
             ps.setInt(2, offset);
@@ -137,7 +139,7 @@ public class MessageDAO implements DAO<Message> {
                         WHERE messageid=?
                         LIMIT 1
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
@@ -168,7 +170,7 @@ public class MessageDAO implements DAO<Message> {
     public boolean clear() {
         try {
             String query = "DELETE FROM message WHERE true";
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             return ps.execute();
         } catch (SQLException err) {

@@ -12,13 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatDAO implements DAO<Chat> {
-    private Connection db;
+    private static Connection db;
 
-    public ChatDAO() {
+    public static boolean connection() {
         try {
-            this.db = Database.connect();
+            ChatDAO.db = Database.connect();
+            return true;
         } catch (SQLException err) {
             System.out.println(err);
+            return false;
         }
     }
 
@@ -33,7 +35,7 @@ public class ChatDAO implements DAO<Chat> {
             else
                 query = "INSERT INTO chat(title, adminid) VALUES (?, ?)";
 
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getTitle());
             ps.setInt(2, model.getAdmin().getUserId());
@@ -56,7 +58,7 @@ public class ChatDAO implements DAO<Chat> {
     public boolean delete(int id) {
         try {
             String query = "DELETE FROM chat WHERE chatid = ?";
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
@@ -75,7 +77,7 @@ public class ChatDAO implements DAO<Chat> {
                         UPDATE chat SET title=?, adminid=?
                         WHERE chatid = ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setString(1, model.getTitle());
             ps.setInt(2, model.getAdmin().getUserId());
@@ -102,7 +104,7 @@ public class ChatDAO implements DAO<Chat> {
                         SELECT chatid, title, adminid, createdat, updatedat FROM chat
                         LIMIT ? OFFSET ?
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setInt(1, limit);
             ps.setInt(2, offset);
@@ -138,7 +140,7 @@ public class ChatDAO implements DAO<Chat> {
                         WHERE chatid=?
                         LIMIT 1
                     """;
-            PreparedStatement ps = this.db.prepareStatement(query);
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
 
