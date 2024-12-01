@@ -5,3 +5,7 @@
 	-fx-alignment: center;
 	-fx-spacing: 20px;
 }
+
+.table-element {
+	-fx-text-alignment: justify;
+}

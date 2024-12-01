@@ -55,7 +55,12 @@ public class WebSocketConfig {
 
                 if (controller != null)
                     CompletableFuture.runAsync(() -> {
-                        Platform.runLater(() -> controller.loadTable());
+                        Platform.runLater(() -> {
+                            if (data.toString().equals("/clear"))
+                                controller.clear();
+                            else
+                                controller.loadTable();
+                        });
                     });
 
                 Listener.super.onText(ws, data, last);

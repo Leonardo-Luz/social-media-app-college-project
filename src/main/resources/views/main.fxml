@@ -20,10 +20,10 @@
 >
     <center>
         <VBox>
-            <TableView fx:id="messagesTable" styleClass="table">
+            <TableView fx:id="messagesTable" styleClass="chat-table">
                 <columns>
-                    <TableColumn fx:id="columnUsername" prefWidth="157.0" text="username" />
-                    <TableColumn fx:id="columnMessage" prefWidth="157.0" text="message" />
+                    <TableColumn fx:id="columnMessage" prefWidth="320.0" styleClass="table-element"
+                        text="message" />
                 </columns>
             </TableView>
             <HBox styleClass="chat-input">
