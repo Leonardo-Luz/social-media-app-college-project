@@ -21,7 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class MainController {
-    private static ObservableList<Message> messages;
+    private ObservableList<Message> messages;
 
     @FXML
     private TextField chatInput;
@@ -35,15 +35,13 @@ public class MainController {
     @FXML
     private TableView<Message> messagesTable;
 
-    private static void loadMessages() {
+    public void loadTable() {
         MessageDAO service = new MessageDAO();
 
-        MainController.messages = FXCollections.observableArrayList(service.list(100, 0));
-    }
+        this.messages = FXCollections.observableArrayList(service.list(100, 0));
 
-    public void loadTable() {
-        MainController.loadMessages();
         this.messagesTable.setItems(messages);
+        this.messagesTable.scrollTo(this.messagesTable.getItems().size());
     }
 
     @FXML
@@ -95,7 +93,8 @@ public class MainController {
 
         messageService.insert(newMessage);
 
-        WebSocketConfig.webSocket.sendText(newMessage.getText(), true);
+        if (WebSocketConfig.webSocket != null)
+            WebSocketConfig.webSocket.sendText(newMessage.getText(), true);
 
         chatInput.setText("");
         loadTable();
