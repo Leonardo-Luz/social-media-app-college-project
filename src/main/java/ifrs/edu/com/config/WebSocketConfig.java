@@ -22,7 +22,7 @@ public class WebSocketConfig {
 
     public static boolean isConnected = false;
 
-    public static void start(MainController controller) {
+    public static void start(ChatConfig controller) {
 
         WebSocketConfig.client = HttpClient.newHttpClient();
 

@@ -15,7 +15,7 @@
 <?import javafx.scene.control.TableView?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ifrs.edu.com.controllers.MainController"
+    fx:controller="ifrs.edu.com.controllers.PrivateChatController"
     stylesheets="@../styles/main.css"
 >
     <center>

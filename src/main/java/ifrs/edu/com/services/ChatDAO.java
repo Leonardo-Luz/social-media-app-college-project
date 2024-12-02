@@ -1,6 +1,8 @@
 package ifrs.edu.com.services;
 
 import ifrs.edu.com.config.Database;
+import ifrs.edu.com.context.AuthProvider;
+import ifrs.edu.com.controllers.PrivateChatController;
 import ifrs.edu.com.models.Chat;
 
 import java.sql.PreparedStatement;
@@ -44,6 +46,30 @@ public class ChatDAO implements DAO<Chat> {
                 ps.setInt(3, model.getChatId());
 
             // insert into CHAT_USERS table
+
+            return ps.execute();
+
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return false;
+    }
+
+    public boolean insertPrivate(Chat model) {
+        try {
+
+            String query;
+
+            query = "INSERT INTO chat(title, adminid) VALUES (?, ?)";
+
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
+
+            ps.setString(1, model.getTitle());
+            ps.setInt(2, model.getAdmin().getUserId());
+
+            if (model.getChatId() != 0)
+                ps.setInt(3, model.getChatId());
 
             return ps.execute();
 
@@ -156,6 +182,38 @@ public class ChatDAO implements DAO<Chat> {
             }
 
             // Get from CHAT_USERS table
+
+            return null;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return null;
+    }
+
+    public Chat getPrivate(String title) {
+        try {
+            UserDAO service = new UserDAO();
+
+            String query = """
+                        SELECT chatid, title, adminid, createdat, updatedat FROM chat
+                        WHERE title=?
+                        LIMIT 1
+                    """;
+            PreparedStatement ps = ChatDAO.db.prepareStatement(query);
+
+            ps.setString(1, title);
+
+            ResultSet response = ps.executeQuery();
+
+            if (response.next()) {
+                return new Chat(
+                        response.getInt("chatid"),
+                        service.get(response.getInt("adminid")),
+                        response.getString("title"),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat"));
+            }
 
             return null;
         } catch (SQLException err) {

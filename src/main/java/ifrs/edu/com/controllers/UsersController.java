@@ -59,7 +59,13 @@ public class UsersController {
                 } else
                     System.out.println("Error on user delete!");
             });
-            VBox pane = new VBox(label, deleteButton);
+            Button chatButton = new Button("Chat Privado");
+            chatButton.setOnAction(ev -> {
+                PrivateChatController.targetUser = selected.getUsername();
+                Main.loadView("privateChat");
+                popup.close();
+            });
+            VBox pane = new VBox(label, deleteButton, chatButton);
             pane.setAlignment(Pos.CENTER);
             pane.setSpacing(12);
             pane.minHeight(140);

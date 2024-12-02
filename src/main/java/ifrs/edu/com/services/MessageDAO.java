@@ -128,6 +128,44 @@ public class MessageDAO implements DAO<Message> {
         return null;
     }
 
+    public List<Message> chatList(int chatId, int limit, int offset) {
+        try {
+            UserDAO userService = new UserDAO();
+            ChatDAO chatService = new ChatDAO();
+
+            List<Message> list = new ArrayList<>();
+
+            String query = """
+                        SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
+                        WHERE chatid = ?
+                        LIMIT ? OFFSET ?
+                    """;
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
+
+            ps.setInt(1, chatId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+
+            ResultSet response = ps.executeQuery();
+
+            while (response.next()) {
+                list.add(new Message(
+                        response.getInt("messageid"),
+                        response.getString("text"),
+                        userService.get(response.getInt("usersid")),
+                        chatService.get(response.getInt("chatid")),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat")));
+            }
+
+            return list;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return null;
+    }
+
     @Override
     public Message get(int id) {
         try {
@@ -167,10 +205,12 @@ public class MessageDAO implements DAO<Message> {
         return null;
     }
 
-    public boolean clear() {
+    public boolean clear(int chatId) {
         try {
-            String query = "DELETE FROM message WHERE true";
+            String query = "DELETE FROM message WHERE chatid=?";
             PreparedStatement ps = MessageDAO.db.prepareStatement(query);
+
+            ps.setInt(1, chatId);
 
             return ps.execute();
         } catch (SQLException err) {

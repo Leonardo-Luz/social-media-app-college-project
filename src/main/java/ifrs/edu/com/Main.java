@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import ifrs.edu.com.config.WebSocketConfig;
+import ifrs.edu.com.context.AuthProvider;
+import ifrs.edu.com.models.Chat;
 import ifrs.edu.com.models.Message;
 import ifrs.edu.com.services.ChatDAO;
 import ifrs.edu.com.services.MessageDAO;
@@ -52,6 +54,8 @@ public class Main extends Application {
             BorderPane page = loader.load();
 
             Scene scene = new Scene(page, 340, 480);
+
+            Main.stage.setResizable(false);
 
             Main.stage.setScene(scene);
             Main.stage.setTitle("Chat");

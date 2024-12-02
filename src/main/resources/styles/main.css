@@ -9,3 +9,11 @@
 .table-element {
 	-fx-text-alignment: justify;
 }
+
+.chat-input {
+	-fx-min-width: 240px;
+}
+
+.chat-submit {
+	-fx-min-width: 100px;
+}
