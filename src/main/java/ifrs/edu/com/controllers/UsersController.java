@@ -50,22 +50,23 @@ public class UsersController {
             });
 
             Label label = new Label(selected.toString());
-            Button deleteButton = new Button("Delete");
-            deleteButton.setOnAction(ev -> {
-                if (!service.delete(selected.getUserId())) {
-                    System.out.println("User Deleted!");
-                    loadTable();
-                    popup.close();
-                } else
-                    System.out.println("Error on user delete!");
-            });
+            // Button deleteButton = new Button("Delete");
+            // deleteButton.setOnAction(ev -> {
+            // if (!service.delete(selected.getUserId())) {
+            // System.out.println("User Deleted!");
+            // loadTable();
+            // popup.close();
+            // } else
+            // System.out.println("Error on user delete!");
+            // });
             Button chatButton = new Button("Chat Privado");
             chatButton.setOnAction(ev -> {
                 PrivateChatController.targetUser = selected.getUsername();
                 Main.loadView("privateChat");
                 popup.close();
             });
-            VBox pane = new VBox(label, deleteButton, chatButton);
+            // VBox pane = new VBox(label, deleteButton, chatButton);
+            VBox pane = new VBox(label, chatButton);
             pane.setAlignment(Pos.CENTER);
             pane.setSpacing(12);
             pane.minHeight(140);

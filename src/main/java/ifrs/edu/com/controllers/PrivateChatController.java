@@ -15,7 +15,9 @@ import javafx.scene.control.TextField;
 public class PrivateChatController {
     public static String targetUser;
 
-    private ChatConfig chat;
+    private ChatConfig chatConfig;
+
+    private Chat chat;
 
     @FXML
     private TextField chatInput;
@@ -34,22 +36,35 @@ public class PrivateChatController {
 
         String chatTitle = AuthProvider.getUser().getUsername() + " - " + targetUser;
 
-        Chat aux = service.getPrivate(chatTitle);
+        chat = service.getPrivate(chatTitle);
 
-        if (aux == null) {
-            service.insertPrivate(new Chat(chatTitle, AuthProvider.getUser()));
-            aux = service.getPrivate(chatTitle);
+        if (chat == null) {
+            chatTitle = targetUser + " - " + AuthProvider.getUser().getUsername();
+            chat = service.getPrivate(chatTitle);
         }
-        chatId = aux.getChatId();
 
-        ChatConfig chat = new ChatConfig(chatId, messagesTable, chatInput, columnMessage);
+        if (chat == null) {
+            service.insertPrivate(new Chat(chatTitle, AuthProvider.getUser()));
+            chat = service.getPrivate(chatTitle);
+        }
+        chatId = chat.getChatId();
 
-        chat.chatStart();
+        chatConfig = new ChatConfig(chatId, messagesTable, chatInput, columnMessage);
+
+        chatConfig.chatStart();
     }
 
     @FXML
     private void sendMessageHandler() {
-        chat.sendMessageHandler();
+        chatConfig.sendMessageHandler();
+    }
+
+    @FXML
+    private void deleteChatHandler() {
+        ChatDAO service = new ChatDAO();
+
+        service.delete(chat.getChatId());
+        Main.loadView("users");
     }
 
     @FXML

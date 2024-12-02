@@ -45,17 +45,17 @@
 
     <bottom>
         <HBox styleClass="nav-container">
-            <Button fx:id="users" text="Usuários"
+            <Button fx:id="voltar" text="voltar"
                 layoutX="400"
                 layoutY="250"
                 onAction="#usersSceneHandler"
             />
 
-            <Button fx:id="chat" text="Chat"
-                layoutX="400"
-                layoutY="250"
-                disable="true"
-            />
+            <!-- <Button fx:id="delete" text="Deletar Conversa" -->
+            <!--     layoutX="400" -->
+            <!--     layoutY="250" -->
+            <!--     onAction="#deleteChatHandler" -->
+            <!-- /> -->
 
             <Button fx:id="profile" text="Perfil"
                 layoutX="400"
