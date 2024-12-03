@@ -7,10 +7,11 @@ Leonardo Luz & Diego Prestes <br/>
 ## Sumário
 1. [Descrição](#Descrição)
 2. [Configuração](#Configuração)
-	1. [Banco de dados](#Banco-de-dados)
-	2. [Clone o Repositório](#Clone-o-Repositório)
-	3. [Variáveis de ambiente](#Variáveis-de-ambiente)
-	4. [Compile e Execute](#Compile-e-Execute)
+	1. [Requisitos](#Requisitos)
+	2. [Banco de dados](#Esquema-Banco-de-dados)
+	3. [Clone o Repositório](#Clone-o-Repositório)
+	4. [Variáveis de ambiente](#Variáveis-de-ambiente)
+	5. [Compile e Execute](#Compile-e-Execute)
 3. [Tecnologias](#Tecnologias)
 	1. [Frontend](#Frontend)
 	2. [Backend](#Backend)
@@ -21,12 +22,17 @@ Leonardo Luz & Diego Prestes <br/>
 
 ---
 ### Descrição
->O objetivo deste projeto é desenvolver uma rede social voltada para a interação em tempo real entre usuários, com um chat global como principal funcionalidade. Além disso, será possível realizar conversas privadas entre usuários
+> O objetivo deste projeto é desenvolver uma rede social voltada para a interação em tempo real entre usuários, com um chat global como principal funcionalidade. Além disso, será possível realizar conversas privadas entre usuários
 
 ---
 ### Configuração
 
-##### Banco de dados
+##### Requisitos
+1. Java JDK
+2. Postgres
+3. Maven
+
+##### Esquema do Banco de dados
 
 [![Schema](./prototipation/database.png)](./src/main/java/ifrs/edu/com/config/SCHEMA.md)
 
@@ -115,6 +121,6 @@ Message(messageId, text, userId, chatId, createdAt, updatedAt)
 ![logic_model](./prototipation/logico.png)
 
 ---
-### Prototipação [WIP]
+### Prototipação
 
 ![main_prototipe](./prototipation/prototipation.png)
