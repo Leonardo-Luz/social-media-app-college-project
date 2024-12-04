@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserDAO implements DAO<User> {
@@ -43,8 +44,6 @@ public class UserDAO implements DAO<User> {
 
             if (model.getUserId() != 0)
                 ps.setInt(4, model.getUserId());
-
-            // insert into USER_FRIENDS table
 
             return ps.execute();
         } catch (SQLException err) {
@@ -119,8 +118,6 @@ public class UserDAO implements DAO<User> {
                         response.getDate("updatedat")));
             }
 
-            // Get from CHAT_USERS table
-
             return list;
         } catch (SQLException err) {
             System.out.println(err);
@@ -153,8 +150,6 @@ public class UserDAO implements DAO<User> {
                         response.getDate("updatedat"));
             }
 
-            // Get from CHAT_USERS table
-
             return null;
         } catch (SQLException err) {
             System.out.println(err);
@@ -186,8 +181,6 @@ public class UserDAO implements DAO<User> {
                         response.getDate("createdat"),
                         response.getDate("updatedat"));
             }
-
-            // Get from CHAT_USERS table
 
             return null;
         } catch (SQLException err) {
