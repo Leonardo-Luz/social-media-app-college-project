@@ -72,9 +72,10 @@ public class UsersController {
             pane.minHeight(140);
             pane.minWidth(100);
 
-            Scene window = new Scene(pane, 100, 100);
+            Scene window = new Scene(pane, 160, 180);
             popup.setScene(window);
             popup.setTitle("POPUP");
+            popup.setResizable(false);
 
             popup.show();
         }
