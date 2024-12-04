@@ -46,6 +46,16 @@
             </HBox>
 
             <HBox styleClass="label-container">
+                <Label text="Confirm password:" styleClass="form-input-label"
+                    minWidth="90"
+                    maxWidth="90"
+                />
+                <PasswordField
+                    fx:id="confirmPasswordInput"
+                />
+            </HBox>
+
+            <HBox styleClass="label-container">
                 <Button text="Cancel"
                     layoutX="400"
                     layoutY="250"

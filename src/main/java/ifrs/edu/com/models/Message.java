@@ -100,7 +100,8 @@ public class Message {
     public boolean equals(Object obj) {
         return obj instanceof Message &&
                 ((Message) obj).getText().equals(this.getText()) &&
-                ((Message) obj).getUser().equals(this.getUser()) &&
-                ((Message) obj).getChat().equals(this.getChat());
+                ((Message) obj).getUser() == null ? true
+                        : ((Message) obj).getUser().equals(this.getUser()) &&
+                                ((Message) obj).getChat().equals(this.getChat());
     }
 }

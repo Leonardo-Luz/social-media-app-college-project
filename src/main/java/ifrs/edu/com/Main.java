@@ -53,6 +53,10 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource(String.format("/views/%s.fxml", route)));
             BorderPane page = loader.load();
 
+            // Create global chat if ADMIN was deleted
+            // new MessageDAO().clear(1);
+            // new ChatDAO().insert(new Chat(1, "global", new UserDAO().list(1, 0).get(0)));
+
             Scene scene = new Scene(page, 340, 480);
 
             Main.stage.setResizable(false);

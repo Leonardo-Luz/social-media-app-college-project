@@ -2,6 +2,7 @@ package ifrs.edu.com.config;
 
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.Message;
+import ifrs.edu.com.models.User;
 import ifrs.edu.com.services.ChatDAO;
 import ifrs.edu.com.services.MessageDAO;
 import javafx.collections.FXCollections;
@@ -76,9 +77,15 @@ public class ChatConfig {
                         if (!isEmpty()) {
                             Message message = getTableView().getItems().get(getIndex());
 
-                            String username = message.getUser().getUsername();
-                            String displayName = username.equals(AuthProvider.getUser().getUsername()) ? "Eu"
-                                    : username;
+                            User user = message.getUser();
+                            String displayName = "Deleted";
+
+                            if (user != null) {
+                                String username = user.getUsername();
+                                displayName = username.equals(AuthProvider.getUser().getUsername()) ? "Eu"
+                                        : username;
+                            }
+
                             String formattedText = "@" + displayName + ": " + message.getText();
 
                             text = new Text(formattedText);

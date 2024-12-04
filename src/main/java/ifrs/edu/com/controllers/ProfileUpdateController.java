@@ -20,12 +20,16 @@ public class ProfileUpdateController {
     private PasswordField passwordInput;
 
     @FXML
+    private PasswordField confirmPasswordInput;
+
+    @FXML
     private void initialize() {
         User user = AuthProvider.getUser();
 
         nameInput.setText(user.getName());
         usernameInput.setText(user.getUsername());
         passwordInput.setText(user.getPassword());
+        confirmPasswordInput.setText(user.getPassword());
     }
 
     @FXML
@@ -35,6 +39,24 @@ public class ProfileUpdateController {
 
     @FXML
     private void confirmHandler(ActionEvent ev) {
+        if (nameInput.getText().length() < 3) {
+            System.err.println("Name has to be at least 3 letters");
+
+            return;
+        } else if (usernameInput.getText().length() < 3) {
+            System.err.println("Username has to be at least 3 letters");
+
+            return;
+        } else if (passwordInput.getText().length() < 3) {
+            System.err.println("Password has to be at least 3 letters");
+
+            return;
+        } else if (!passwordInput.getText().equals(confirmPasswordInput.getText())) {
+            System.err.println("Passwords dont match");
+
+            return;
+        }
+
         User user = AuthProvider.getUser();
         user.setName(nameInput.getText());
         user.setUsername(usernameInput.getText());
@@ -43,8 +65,8 @@ public class ProfileUpdateController {
         UserDAO service = new UserDAO();
         service.update(user);
 
-        AuthProvider.logout();
-        Main.loadView("login");
+        AuthProvider.login(user.getUsername(), user.getPassword());
+        Main.loadView("profile");
     }
 
     @FXML
