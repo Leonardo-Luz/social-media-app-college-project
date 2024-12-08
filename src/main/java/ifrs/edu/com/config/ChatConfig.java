@@ -217,11 +217,11 @@ public class ChatConfig {
 
         if (chatInput.getText().equals("/clear all")) {
             clearAll();
-            WebSocketConfig.sendMessage(newMessage.getText());
+            WebSocketConfig.sendMessage(newMessage.getText() + ":");
             return;
         } else if (chatInput.getText().equals("/clear")) {
             clear();
-            WebSocketConfig.sendMessage(newMessage.getText());
+            WebSocketConfig.sendMessage(newMessage.getText() + ":");
             return;
         } else if (chatInput.getText().length() > 9 && chatInput.getText().substring(0, 10).equals("/messages ")) {
             try {
