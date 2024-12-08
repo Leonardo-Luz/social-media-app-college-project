@@ -8,7 +8,6 @@ import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import ifrs.edu.com.controllers.MainController;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Platform;
 
@@ -56,10 +55,10 @@ public class WebSocketConfig {
                 if (controller != null)
                     CompletableFuture.runAsync(() -> {
                         Platform.runLater(() -> {
-                            if (data.toString().equals("/clear"))
-                                controller.clear();
-                            else
+                            if (data.toString().endsWith(":"))
                                 controller.loadTable();
+                            // else if(data.toString().endsWith("!"))
+                            // onlineUsers.add(data.toString().replaceFirst(".$", ""));
                         });
                     });
 

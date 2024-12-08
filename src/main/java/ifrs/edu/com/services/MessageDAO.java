@@ -8,6 +8,7 @@ import ifrs.edu.com.models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +129,7 @@ public class MessageDAO implements DAO<Message> {
         return null;
     }
 
-    public List<Message> chatList(int chatId, int limit, int offset) {
+    public List<Message> chatList(int chatId) {
         try {
             UserDAO userService = new UserDAO();
             ChatDAO chatService = new ChatDAO();
@@ -138,11 +139,47 @@ public class MessageDAO implements DAO<Message> {
             String query = """
                         SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
                         WHERE chatid = ?
-                        LIMIT ? OFFSET ?
+                        ORDER BY messageid ASC
                     """;
             PreparedStatement ps = MessageDAO.db.prepareStatement(query);
 
             ps.setInt(1, chatId);
+
+            ResultSet response = ps.executeQuery();
+
+            while (response.next()) {
+                list.add(new Message(
+                        response.getInt("messageid"),
+                        response.getString("text"),
+                        userService.get(response.getInt("usersid")),
+                        chatService.get(response.getInt("chatid")),
+                        response.getDate("createdat"),
+                        response.getDate("updatedat")));
+            }
+
+            return list;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return null;
+    }
+
+    public List<Message> listByUserId(int usersId, int limit, int offset) {
+        try {
+            UserDAO userService = new UserDAO();
+            ChatDAO chatService = new ChatDAO();
+
+            List<Message> list = new ArrayList<>();
+
+            String query = """
+                        SELECT messageid, text, usersid, chatid, createdat, updatedat FROM message
+                        WHERE usersid=?
+                        LIMIT ? OFFSET ?
+                    """;
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
+
+            ps.setInt(1, usersId);
             ps.setInt(2, limit);
             ps.setInt(3, offset);
 
@@ -205,7 +242,7 @@ public class MessageDAO implements DAO<Message> {
         return null;
     }
 
-    public boolean clear(int chatId) {
+    public boolean clearAll(int chatId) {
         try {
             String query = "DELETE FROM message WHERE chatid=?";
             PreparedStatement ps = MessageDAO.db.prepareStatement(query);
@@ -218,5 +255,79 @@ public class MessageDAO implements DAO<Message> {
         }
 
         return false;
+    }
+
+    public boolean clear(int chatId, int userId) {
+        try {
+            String query = "DELETE FROM message WHERE chatid=? AND usersid=?";
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
+
+            ps.setInt(1, chatId);
+            ps.setInt(2, userId);
+
+            return ps.execute();
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return false;
+    }
+
+    public List<Message> listUserMessages(int chatId, String username) {
+        try {
+            List<Message> list = new ArrayList<>();
+
+            String query = """
+                        SELECT
+                            m.messageid, m.text, m.createdat AS m_createdat, m.updatedat AS m_updatedat,
+                            u.usersid AS u_usersid, u.name AS u_name, u.username AS u_username, u.password AS u_password, u.createdat AS u_createdat,u.updatedat AS u_updatedat,
+                            c.chatid AS c_chatid, c.title AS c_title, c.adminid AS c_adminid, c.createdat AS c_createdat, c.updatedat AS c_updatedat,
+                            a.usersid AS a_usersid, a.name AS a_name, a.username AS a_username, a.password AS a_password, a.createdat AS a_createdat,a.updatedat AS a_updatedat
+                        FROM message AS m
+                        INNER JOIN users AS u ON u.usersid = m.usersid
+                        INNER JOIN chat AS c ON c.chatid = m.chatid
+                        INNER JOIN users AS a ON a.usersid = c.adminid
+                        WHERE m.chatid=? AND u.username=?
+                    """;
+            PreparedStatement ps = MessageDAO.db.prepareStatement(query);
+
+            ps.setInt(1, chatId);
+            ps.setString(2, username);
+
+            ResultSet response = ps.executeQuery();
+
+            while (response.next()) {
+                list.add(new Message(
+                        response.getInt("messageid"),
+                        response.getString("text"),
+                        new User(
+                                response.getInt("u_usersid"),
+                                response.getString("u_name"),
+                                response.getString("u_username"),
+                                response.getString("u_password"),
+                                response.getDate("u_createdat"),
+                                response.getDate("u_updatedat")),
+                        new Chat(
+                                response.getInt("c_chatid"),
+                                new User(
+                                        response.getInt("a_usersid"),
+                                        response.getString("a_name"),
+                                        response.getString("a_username"),
+                                        response.getString("a_password"),
+                                        response.getDate("a_createdat"),
+                                        response.getDate("a_updatedat")),
+                                response.getString("c_title"),
+                                response.getDate("c_createdat"),
+                                response.getDate("c_updatedat")),
+                        response.getDate("m_createdat"),
+                        response.getDate("m_updatedat")));
+            }
+
+            return list;
+        } catch (SQLException err) {
+            System.out.println(err);
+        }
+
+        return null;
     }
 }
