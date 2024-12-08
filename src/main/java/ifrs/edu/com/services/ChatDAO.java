@@ -1,9 +1,8 @@
 package ifrs.edu.com.services;
 
 import ifrs.edu.com.config.Database;
-import ifrs.edu.com.context.AuthProvider;
-import ifrs.edu.com.controllers.PrivateChatController;
 import ifrs.edu.com.models.Chat;
+import ifrs.edu.com.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,8 +43,6 @@ public class ChatDAO implements DAO<Chat> {
 
             if (model.getChatId() != 0)
                 ps.setInt(3, model.getChatId());
-
-            // insert into CHAT_USERS table
 
             return ps.execute();
 
@@ -122,12 +119,14 @@ public class ChatDAO implements DAO<Chat> {
     @Override
     public List<Chat> list(int limit, int offset) {
         try {
-            UserDAO service = new UserDAO();
-
             List<Chat> list = new ArrayList<>();
 
             String query = """
-                        SELECT chatid, title, adminid, createdat, updatedat FROM chat
+                        SELECT
+                            c.chatid, c.title, c.adminid, c.createdat AS c_createdat, c.updatedat AS c_updatedat,
+                            u.usersid, u.name, u.username, u.password, u.createdat AS u_createdat, u.updatedat AS u_updatedat
+                        FROM chat c
+                        INNER JOIN users u ON u.usersid=adminid
                         LIMIT ? OFFSET ?
                     """;
             PreparedStatement ps = ChatDAO.db.prepareStatement(query);
@@ -140,10 +139,16 @@ public class ChatDAO implements DAO<Chat> {
             while (response.next()) {
                 list.add(new Chat(
                         response.getInt("chatid"),
-                        service.get(response.getInt("adminid")),
+                        new User(
+                                response.getInt("usersid"),
+                                response.getString("name"),
+                                response.getString("username"),
+                                response.getString("password"),
+                                response.getDate("u_createdat"),
+                                response.getDate("u_updatedat")),
                         response.getString("title"),
-                        response.getDate("createdat"),
-                        response.getDate("updatedat")));
+                        response.getDate("c_createdat"),
+                        response.getDate("c_updatedat")));
             }
 
             // Get from CHAT_USERS table
@@ -159,13 +164,16 @@ public class ChatDAO implements DAO<Chat> {
     @Override
     public Chat get(int id) {
         try {
-            UserDAO service = new UserDAO();
-
             String query = """
-                        SELECT chatid, title, adminid, createdat, updatedat FROM chat
+                        SELECT
+                            c.chatid, c.title, c.adminid, c.createdat AS c_createdat, c.updatedat AS c_updatedat,
+                            u.usersid, u.name, u.username, u.password, u.createdat AS u_createdat, u.updatedat AS u_updatedat
+                        FROM chat c
+                        INNER JOIN users u ON u.usersid=adminid
                         WHERE chatid=?
                         LIMIT 1
                     """;
+
             PreparedStatement ps = ChatDAO.db.prepareStatement(query);
 
             ps.setInt(1, id);
@@ -175,10 +183,16 @@ public class ChatDAO implements DAO<Chat> {
             if (response.next()) {
                 return new Chat(
                         response.getInt("chatid"),
-                        service.get(response.getInt("adminid")),
+                        new User(
+                                response.getInt("usersid"),
+                                response.getString("name"),
+                                response.getString("username"),
+                                response.getString("password"),
+                                response.getDate("u_createdat"),
+                                response.getDate("u_updatedat")),
                         response.getString("title"),
-                        response.getDate("createdat"),
-                        response.getDate("updatedat"));
+                        response.getDate("c_createdat"),
+                        response.getDate("c_updatedat"));
             }
 
             // Get from CHAT_USERS table
@@ -193,10 +207,12 @@ public class ChatDAO implements DAO<Chat> {
 
     public Chat getPrivate(String title) {
         try {
-            UserDAO service = new UserDAO();
-
             String query = """
-                        SELECT chatid, title, adminid, createdat, updatedat FROM chat
+                        SELECT
+                            c.chatid, c.title, c.adminid, c.createdat AS c_createdat, c.updatedat AS c_updatedat,
+                            u.usersid, u.name, u.username, u.password, u.createdat AS u_createdat, u.updatedat AS u_updatedat
+                        FROM chat c
+                        INNER JOIN users u ON u.usersid=adminid
                         WHERE title=?
                         LIMIT 1
                     """;
@@ -209,10 +225,16 @@ public class ChatDAO implements DAO<Chat> {
             if (response.next()) {
                 return new Chat(
                         response.getInt("chatid"),
-                        service.get(response.getInt("adminid")),
+                        new User(
+                                response.getInt("usersid"),
+                                response.getString("name"),
+                                response.getString("username"),
+                                response.getString("password"),
+                                response.getDate("u_createdat"),
+                                response.getDate("u_updatedat")),
                         response.getString("title"),
-                        response.getDate("createdat"),
-                        response.getDate("updatedat"));
+                        response.getDate("c_createdat"),
+                        response.getDate("c_updatedat"));
             }
 
             return null;
