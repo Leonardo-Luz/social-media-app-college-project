@@ -66,9 +66,11 @@ public class ChatConfig {
 
         Text placeholder = new Text("Nenhuma mensagem no Chat");
         chatTable.setPlaceholder(placeholder);
+        chatTable.setLayoutX(400);
+        chatTable.setMaxWidth(400);
 
-        chatTable.setLayoutX(340);
-        messageColumn.setPrefWidth(337.3);
+        messageColumn.prefWidthProperty().bind(chatTable.widthProperty().multiply(0.95));
+
         messageColumn.setText("Chat " + service.get(this.chatId).getTitle());
 
         messageColumn.setCellFactory(new Callback<TableColumn<Message, String>, TableCell<Message, String>>() {
@@ -110,6 +112,7 @@ public class ChatConfig {
         });
 
         messageColumn.setResizable(true);
+        messageColumn.setReorderable(false);
     }
 
     public void clearAll() {
@@ -135,7 +138,7 @@ public class ChatConfig {
         table.setPlaceholder(placeholder);
 
         table.setLayoutX(340);
-        column.setPrefWidth(337.3);
+        column.prefWidthProperty().bind(chatTable.widthProperty().multiply(0.95));
         column.setText(username + " messages");
 
         column.setCellFactory(new Callback<TableColumn<Message, String>, TableCell<Message, String>>() {
@@ -169,6 +172,8 @@ public class ChatConfig {
         });
 
         column.setResizable(true);
+        column.setMaxWidth(337.3);
+        column.setReorderable(false);
     }
 
     private void popupMessages(List<Message> list, String username) {
