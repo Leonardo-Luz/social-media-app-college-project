@@ -24,14 +24,14 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        ChatConfig chat = new ChatConfig(1, messagesTable, chatInput, columnMessage);
+        chat = new ChatConfig(1, messagesTable, chatInput, columnMessage);
 
         chat.chatStart();
     }
 
     @FXML
     private void sendMessageHandler() {
-        chat.sendMessageHandler();
+        this.chat.sendMessageHandler();
     }
 
     @FXML
