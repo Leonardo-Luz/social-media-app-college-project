@@ -49,7 +49,7 @@ public class ChatConfig {
 
     public void chatStart() {
         try {
-            WebSocketConfig.start(this);
+            WebSocketConfig.startOnChat(this);
         } catch (Exception err) {
             System.out.println("Erro ao connectar ao WebSocket Server!");
         }

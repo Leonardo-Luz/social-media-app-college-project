@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 
 import ifrs.edu.com.Main;
+import ifrs.edu.com.config.WebSocketConfig;
 import ifrs.edu.com.context.AuthProvider;
 import ifrs.edu.com.models.User;
 import ifrs.edu.com.services.UserDAO;
@@ -12,6 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,7 +25,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class UsersController {
     private ObservableList<User> users;
@@ -36,11 +42,14 @@ public class UsersController {
     private TableColumn<User, String> columnUsername;
 
     @FXML
+    private TableColumn<User, String> columnOnline;
+
+    @FXML
     private TableView<User> usersTable;
 
     private void loadUserProprieties() {
         User selected = this.usersTable.getSelectionModel().getSelectedItem();
-        UserDAO service = new UserDAO();
+        // UserDAO service = new UserDAO();
 
         if (selected != null) {
             Stage popup = new Stage();
@@ -81,10 +90,24 @@ public class UsersController {
         }
     }
 
-    private void loadTable() {
+    public void loadTable() {
         UserDAO service = new UserDAO();
         this.users = FXCollections.observableArrayList(service.list(100, 0));
         this.usersTable.setItems(users.filtered(user -> user.getUserId() != AuthProvider.getUser().getUserId()));
+
+        usersTable.refresh();
+    }
+
+    @FXML
+    private void initialize() {
+        try {
+            WebSocketConfig.startOnUsers(this);
+        } catch (Exception err) {
+            System.out.println("Erro ao connectar ao WebSocket Server!");
+        }
+
+        this.loadTable();
+
         this.usersTable.getSelectionModel().getTableView().setOnMouseClicked(ev -> {
             if (ev.getClickCount() == 2 && !ev.isConsumed()) {
                 ev.consume();
@@ -97,15 +120,52 @@ public class UsersController {
                 loadUserProprieties();
             }
         });
-    }
-
-    @FXML
-    private void initialize() {
-        this.loadTable();
 
         columnId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        columnOnline.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
+            @Override
+            public TableCell<User, String> call(TableColumn<User, String> arg0) {
+                return new TableCell<User, String>() {
+                    private Text text;
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (!isEmpty()) {
+                            User user = getTableView().getItems().get(getIndex());
+
+                            try {
+                                text = new Text(
+                                        WebSocketConfig.onlineids.contains(String.valueOf(user.getUserId())) ? "Sim"
+                                                : "Não");
+                            } catch (Exception exception) {
+                                text = new Text("Err");
+                            }
+
+                            setGraphic(text);
+                        } else {
+                            text = new Text("");
+                            setGraphic(text);
+                        }
+                    }
+                };
+            }
+        });
+        // columnOnline.setCellValueFactory(
+        // new Callback<TableColumn.CellDataFeatures<User, String>,
+        // ObservableValue<String>>() {
+        // @Override
+        // public ObservableValue<String> call(TableColumn.CellDataFeatures<User,
+        // String> param) {
+        // return new SimpleStringProperty(
+        // WebSocketConfig.onlineids.contains(String.valueOf(param.getValue().getUserId()))
+        // ? "Sim"
+        // : "Não");
+        // }
+        // });
     }
 
     @FXML

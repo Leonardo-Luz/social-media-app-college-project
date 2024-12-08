@@ -41,8 +41,10 @@ public class Main extends Application {
 
     private void addQuitApplication(Stage stage) {
         stage.addEventHandler(KeyEvent.KEY_RELEASED, ev -> {
-            if (KeyCode.ESCAPE.equals(ev.getCode()))
+            if (KeyCode.ESCAPE.equals(ev.getCode())) {
+                WebSocketConfig.close();
                 stage.close();
+            }
         });
     }
 

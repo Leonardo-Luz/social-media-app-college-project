@@ -18,9 +18,10 @@
         <Label text="USERS" />
         <TableView fx:id="usersTable" styleClass="table">
             <columns>
-                <TableColumn fx:id="columnId" prefWidth="52.0" text="id" />
-                <TableColumn fx:id="columnName" prefWidth="157.0" text="name" />
-                <TableColumn fx:id="columnUsername" prefWidth="157.0" text="username" />
+                <TableColumn fx:id="columnId" prefWidth="50.0" text="id" />
+                <TableColumn fx:id="columnName" prefWidth="118.0" text="name" />
+                <TableColumn fx:id="columnUsername" prefWidth="118.0" text="username" />
+                <TableColumn fx:id="columnOnline" prefWidth="50.0" text="online" />
             </columns>
         </TableView>
     </center>
